@@ -137,7 +137,7 @@
             <!-- <div class='config-img'><img src="profile"></div> -->
           </td>
           <td>{{usuario.userestado}}
-            <!-- <div class="form-check form-switch">
+            <div class="form-check form-switch">
               <form action="update" method='POST'>
                 <input hidden value='' name='iduser'></input>
                 <input hidden value='' name='estado'></input>
@@ -145,7 +145,12 @@
                 <label class="form-check-label mt-4" for="cheked"></label>
                 <input type='submit' class="form-check-input mt-2" value=''></input>
               </form>
-            </div> -->
+            </div>
+            <div class="form-check form-switch">
+                <form action="update" method='POST'>
+                  <input type='submit' class="form-check-input mt-2" value=''></input>
+                </form>
+              </div>
           </td>
         </tr>
         {% endfor %}

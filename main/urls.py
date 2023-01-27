@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import inicio, login, informacion, recuperar, logout_user
+from .views import inicio, login, informacion, recuperar, logout_user, error_404
 
 urlpatterns = [
     path('admin/', admin.site.urls),

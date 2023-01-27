@@ -1,3 +1,6 @@
 {
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "git.pullBeforeCheckout": false,
+    "editor.suggest.showStatusBar": false,
+    "workbench.statusBar.visible": true
 }

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.defaults import page_not_found
 # from django.http import HttpResponse
 # from django.http import JsonResponse
 # from activos.models import Activo
@@ -34,6 +35,9 @@ def logout_user(request):
 
     print(request.POST)
     return redirect('/logout/')
+
+def error_404(request,exception):
+    return page_not_found(request,'404.html')
 
 
 
