@@ -1,0 +1,154 @@
+
+*{
+    margin: 0;
+    padding: 0;
+} 
+/* Inicio session */
+
+@font-face {
+    font-family: Roboto;
+    src: url('../fonts/RobotoCondensed-Regular.ttf') format('truetype');
+}
+
+:root{
+    --font-sidici:'Roboto';
+}
+*{
+    font-family: var(--font-sidici);
+}
+
+.fondo{
+    height: 100vh;
+    background: #000046; 
+    background: -webkit-linear-gradient(to right, #1CB5E0, #000046);
+    background: linear-gradient(to right, #1CB5E0, #000046);    
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.content h1{
+    display: flex;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+#marcologin{
+    display: flex;
+    float: right;
+    width: 30%;
+    height: 100vh;
+    background-color: rgba(224, 234, 239, 0.8);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+} 
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+ } 
+
+.content img{
+    display: flex;
+    width: 26%;
+    margin: 0px;
+    padding: 0px; 
+    margin-bottom: 15px; 
+}
+
+.item{
+    width: 100%;
+    height: 10vh;
+}
+.item input{
+    width: 85%;
+    /* margin: 0px 10px 30px 10px; */
+    background-color: rgba(255, 255, 255, 0.562);
+    margin-left: 50%;
+    transform: translate(-50%, 0%);
+}
+.item label{
+    display: flex;
+    font-style: bold;
+    font-weight: 700;
+    margin-left: 7%
+}
+
+.form{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 30vh;
+    flex-direction: column;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 30px;
+}
+.formpass{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 20vh;
+    flex-direction: column;
+    text-align: center;
+    font-size: 14px;
+}
+
+.formpass a {
+    text-decoration: none;
+    margin-top: 15px;
+    margin-bottom: 30px; 
+}
+
+.boton{
+    background-color: #1d8ee5;
+    color:#ffffff;
+    padding: 5px 34%;
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer; 
+    border: none;
+    margin-top: 30px;
+}
+.boton:hover{
+    background-color: #001b53;
+    color:azure;
+}
+
+ #imgamovil{
+    position: absolute;
+    float: left;
+    top: 250px;
+    height: 130px;
+    max-width: 45%;
+    padding: 0px 0px 0px 50px;
+ }
+.term-condicion p{
+    position: absolute;
+    top: 15px; 
+}
+
+@media (max-width: 900px) {
+    #imgamovil{
+        display: none;
+    }
+    #marcologin{
+        float: left;
+        width: 350px;    
+    }
+    .form{
+        margin-top: 0px;  
+    }
+}  
+
+@media (max-height: 533px) {
+    .content img{
+        display: none;
+    }
+    .item label{
+        visibility:hidden;
+    }
+}
+
+
+ 

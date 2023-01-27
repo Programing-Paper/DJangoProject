@@ -1,0 +1,18 @@
+.contentupdate{
+    margin-top: 5px;
+    background-color: rgba(224, 234, 239, 0.603);
+    border: 1px solid black;
+}
+
+.contentupdate form{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.main-principal{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 50px;
+}

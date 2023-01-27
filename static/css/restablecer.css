@@ -1,0 +1,109 @@
+/*pagina restablecer*/
+
+@font-face {
+    font-family: Roboto;
+    src: url('../fonts/RobotoCondensed-Regular.ttf') format('truetype');
+}
+
+*{
+    margin: 0px;
+    font-family: 'Roboto';
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: #0F2027;  
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027); 
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027); 
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.restablcont{
+    position: relative;
+    display: flex;
+    width: 40%; 
+    height: 70vh;
+    background: rgba(255, 255, 255, 0.548);
+    border-radius: 5px;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.imgamovil{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 15px;
+    left: 15px;
+}
+.imgamovil img{
+    width: 50%;
+}
+
+.textemail{
+    position: absolute;
+    font-size: 16px;
+    top: 23%;
+}
+
+.contenedor{
+    margin-top: 30%;
+}
+
+.posbutrec{
+    background-color: #1d8ee5;
+    padding: 8px 10px;
+    border-radius: 3px;
+    margin-top: 25px;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+.posbutrec:hover{
+    background-color: #001b53;
+}
+#optionreturn{
+    margin-top: 20px;
+    font-size: 16px;
+    color: #696666;
+}
+.regresar{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    bottom: 15px;
+}
+
+#posbutreg{
+    color:#000000;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #ffff;
+    background-color: #1d8ee5;
+}
+#posbutreg:hover{
+    background-color: #001b53;   
+}
+
+#formemail{
+    width: 80%;
+    height: 30px;
+    font-size: 15px;
+    background-color: rgba(240, 248, 255, 0.7);
+}
+
+@media (max-width: 650px){
+
+    .restablcont{
+        width: 95%;
+    }
+
+}

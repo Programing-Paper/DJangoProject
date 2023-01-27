@@ -1,0 +1,61 @@
+
+{% load static %}
+<header class='menu-arriba'>
+    <div>
+        <p></p>
+    </div>
+    <div class='amovilimg'><img></div>
+    <a href="{% url 'inicio' %}" title="Principal" class="icon-home">
+        <i class="bi bi-house-door-fill"></i>
+    </a>
+    <div class='menu-opciones'>
+        <li><i class="bi bi-justify" id='icon-justify' title='Opciones'></i>
+            <ul>
+                <li><a href="{% url 'activos' %}">
+                <i class="bi bi-pc-display-horizontal" title="Activos"></i>Activos</a></li>
+                <li><a href="{% url 'usuarios' %}">
+                <i class="bi bi-people-fill"></i>Empleados</a></li>
+                <li><a href="{% url 'novedades' %}">
+                <i class="bi bi-tools"></i>Novedades</a></li>
+                <li><a href="{% url 'informes' %}">
+                <i class="bi bi-bar-chart-line-fill"></i>Informes</a></li>
+                <li id='bdark'><a href="#"><i class="bi bi-eye-fill" title='Accesibilidad'></i>Contraste</a></li>
+            </ul>
+        </li>
+    </div>
+    <div class='menu-perfil'>
+            <li><div class='img-perfil'><img src=""></div>
+            <ul>
+                <li><a href="{% url 'informacion' %}" target="_blank" >Información</a></li>
+                <li><a href="{% url 'config' %}">Configuración</a></li>
+                <li><a href="{% url 'login' %}">Cerrar sesión</a></li>
+            </ul>
+        </li>
+    </div>
+</header> 
+
+<script>
+    const bdark = document.querySelector('#bdark');
+    const body = document.querySelector('body');
+
+    load();
+
+    bdark.addEventListener('click', e => {
+        body.classList.toggle('darkmode');
+        store(body.classList.contains('darkmode'));
+    });
+
+    function load() {
+        const darkmode = localStorage.getItem('darkmode');
+
+        if (!darkmode) {
+            store('false');
+        } else if (darkmode == 'true') {
+            body.classList.add('darkmode');
+        }
+    }
+
+    function store(value) {
+        localStorage.setItem('darkmode', value);
+    }
+</script>

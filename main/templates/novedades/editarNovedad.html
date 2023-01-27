@@ -1,0 +1,62 @@
+{% extends 'partials/body.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<div class="main-principal"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="contentupdate">
+            <form method="POST" class='form'>
+                <h1>Editar Novedades</h1>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" hidden name="id_novedad" value="">
+                        <p>Documento del Activo: </p>
+                        <p class="border p-1 "></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <p>Estado de la Novedad: </p>
+                        <label>Resuelto: <input type="checkbox" name="resuelto" value="SI" style="width: 50px;"></label><br>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="idactivo">Empleado</label>
+                        <select required name="idempleado" id="idempleado" class='form-control'>
+                                <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="idactivo">Activo</label>
+                        <select required name="idactivo" id="idactivo" class='form-control'>
+                                <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="fecha">Fecha</label>
+                        <input value="" required name="fecha" type="date" id="fecha" class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="descripcion">Descripcion</label>
+                        <textarea placeholder="Información del Activo" class='form-control' required name='descripcion'></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" name="guardar">Guardar</button>
+                <a href="" class="btn btn-dark volver">Volver</a>
+            </form>
+        </div>
+    </div>
+</div>
+<div class='footer-solo'>
+    <h1> SIDICI. todos los derechos reservados @Amovil &#169 2016 - 2022 </h1>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

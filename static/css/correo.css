@@ -1,0 +1,82 @@
+
+@font-face {
+    font-family: Roboto;
+    src: url('../fonts/RobotoCondensed-Regular.ttf') format('truetype');
+}
+:root{
+    --font-sidici: 'Roboto';   
+}
+
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Roboto';
+}
+
+.contentpadre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: #373B44; 
+    background: -webkit-linear-gradient(to right, #4286f4, #373B44);
+    background: linear-gradient(to right, #4286f4, #373B44);
+}
+
+.contenthijo{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 60%;
+    height: 100vh;
+    background-color: rgba(224, 234, 239, 0.8);
+}
+
+.contenthijo img{
+    margin-top: 5px; 
+    max-width: 95%;
+    height: 50px;
+}
+
+
+.imgpresent{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 46vh;
+    margin-bottom: 15px;
+}
+.imgpresent img{
+    position: absolute;
+    width: 100%;
+    height: 46vh;
+}
+
+.contenthijo div {
+    margin-top: 5%;
+}
+
+.btncorreo a{
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    background-color: #1d8ee5;
+}
+
+
+.btncorreo a:hover{
+    background-color: #001b53;
+}
+
+@media (max-width: 600px) {
+    .contenthijo{
+        width: 100%;
+    }
+
+}
