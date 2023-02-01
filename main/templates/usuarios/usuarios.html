@@ -1,6 +1,6 @@
 {% extends 'partials/body.html' %}
 {% load static %}
-
+{% load crispy_forms_tags %}
 
 {% block contenido %}
 <div class='main-principal'></div>
@@ -24,7 +24,15 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="insertarDatos.php?guardar=usuarios&usu=<?php echo $_GET['usu'] ?>" method="POST">
+                            <form action="" type="POST">
+                                {{form|crispy}}
+                                {% csrf_token %}
+                            </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                            <!-- <form action="insertarDatos.php?guardar=usuarios&usu=<?php echo $_GET['usu'] ?>" method="POST">
                                 <div class="form-users">
                                     <label for="idempleado">Documento</label>
                                     <input type="text" placeholder="Ingrese documento" class='form-control' required name='idempleado' />
@@ -53,7 +61,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
+                                </div> -->
                             </form>
                         </div>
                     </div>

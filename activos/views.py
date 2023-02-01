@@ -2,52 +2,36 @@ from django.shortcuts import render, redirect
 from multiprocessing import context
 from activos.forms import ActivoForm
 from activos.models import Activo
+# from django.views import generic
+# from django.http import JsonResponse
+# from django.db.models import Q
+# from django.views.generic import View
+
 
 # Create your views here.
 
 def activos(request):
     activos = Activo.objects.all()
+    form = ActivoForm()
+    if request.method == "POST":
+        form = ActivoForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect("activos")
+        else:
+            form= ActivoForm()
+            print("Error") 
+    
     title= 'activo'
     context={
-        'title': title
-    }
-    return render(request,'activos/activos.html', {"activos": activos })
-
-def insertarDatos(request):
-    # print(request.POST['marca'])
-    activos = Activo(marca=request.POST['fecha'], idactivo=request.POST['idactivo'])
-    activos.save()
-    return redirect('/activos/')
-
-
-def editarActivos(request):
-    title= 'Editar activos'
-    context={
-        'title': title
-    }
-    return render(request,'editaractivos.html', context)
-
-def deleteActivo(request, idactivo):
-    delete = Activo.objects.get(id=idactivo)
-    delete.delete()
-    title= 'Editar activos'
-    context={
-        'title': title
-    }
-    return redirect('/activos/')
-
-def registrarActivos(request):
-    if request.method == 'POST':
-        form = ActivoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            print("El activo se registro correctamente")
-            return redirect('activos')
-        else:
-            print("El Activo no se registro!")
-    else:
-        form= ActivoForm()
-    context={
+        'title': title,
+        'activos': activos,
         'form': form
     }
-    # return render(request,'editaractivos.html', context)
+
+    return render(request,'activos/activos.html', context)
+
+
+
+
+

@@ -10,7 +10,7 @@ class Cargo(models.Model):
 class Empleado(models.Model):
     nombres=models.CharField(max_length=60, verbose_name="Nombres")
     apellidos=models.CharField(max_length=60, verbose_name="Apellidos")
-    cargoid=models.ForeignKey( Cargo, on_delete=models.CASCADE, blank=False , null=True ,  verbose_name="Cargoid")
+    # cargoid=models.ForeignKey( Cargo, on_delete=models.CASCADE, blank=False , null=True ,  verbose_name="Cargo")
     class Ciudad(models.TextChoices):
         medellin='medellin', _('Medellin')
         bogota='bogota', _('Bogota')

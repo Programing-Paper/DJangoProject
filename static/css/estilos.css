@@ -304,10 +304,7 @@ footer h1{
 .opcionesnav-activos img:hover{
     filter: invert(11%) sepia(71%) saturate(7143%) hue-rotate(238deg) brightness(97%) contrast(116%);
 }
-.opcionesnav-activos input{
-    margin-right: 300px;
-    margin-left: 15px;   
-}    
+
 .tables-sidici{
     position: relative;
     width: 100%;
@@ -388,10 +385,7 @@ footer h1{
 .opcionesnav-users img:hover{
     filter: invert(11%) sepia(71%) saturate(7143%) hue-rotate(238deg) brightness(97%) contrast(116%);
 }
-.opcionesnav-users input{
-    margin-right: 15px;
-    margin-left: 15px;
-}   
+
 .tables-sidici{
     margin-top: 15px;
 }
@@ -481,10 +475,6 @@ footer h1{
 .opcionesnav-nov img:hover{
     filter: invert(11%) sepia(71%) saturate(7143%) hue-rotate(238deg) brightness(97%) contrast(116%);
 }
-.opcionesnav-nov input{
-    margin-right: 15px;
-    margin-left: 15px;
-}   
 
 /* formulario Novedades */
 

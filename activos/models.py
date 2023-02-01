@@ -8,21 +8,24 @@ from usuarios.models import Empleado
 # Create your models here.
 
 class Activo(models.Model):
-    empleadoid=models.ForeignKey(Empleado, on_delete=models.CASCADE,null=True,blank=False,verbose_name="Empleadoid")
+    serial = models.CharField(max_length=25, verbose_name="Serial")
+    so = models.CharField(max_length=10, verbose_name="Sistama operativo")
+    marca = models.CharField(max_length=25, verbose_name="Tipo de dispositivo")
+    tipo = models.CharField(max_length=10, verbose_name="Caracteristicas")
+    fecha = models.DateField(verbose_name="Fecha de registro", help_text=u"MM/DD/AAAA")
+    observaciones = models.TextField(max_length=200, verbose_name="Caracteristicas")
     class EstadoActivo(models.TextChoices):
-        ACTIVO='1', _('Activo')
-        INACTIVO='0', _('Inactivo')
-    estado =models.CharField(max_length=1, choices=EstadoActivo.choices, default=EstadoActivo.ACTIVO, verbose_name="Estadoactivo")
-    serial = models.CharField(max_length=25)
-    so = models.CharField(max_length=10)
-    marca = models.CharField(max_length=25)
-    tipo = models.CharField(max_length=10)
-    fecha = models.DateField(verbose_name="Fecha registro", help_text=u"MM/DD/AAAA")
-    observaciones = models.CharField(max_length=200)
+        nuevo='3', _('Nuevo')
+        usado='2', _('Usado')
+        reparado='1', _('Reparado')
+        disponible='0', _('Disponible')
+    situacion =models.CharField(max_length=1, choices=EstadoActivo.choices, default=EstadoActivo.disponible, verbose_name="Estado activo")
     class Estado(models.TextChoices):
         asignado='1', _('Asignado')
-        pendiente='0', _('Pendiente')
-    estado = models.CharField(max_length=1,choices=Estado.choices, default=Estado.pendiente, verbose_name='Estado')
+        creado='0', _('Creado')
+    estado = models.CharField(max_length=1,choices=Estado.choices, default=Estado.creado, verbose_name='Estado')
+    empleadoid=models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Empleado")
+
 
 
 
