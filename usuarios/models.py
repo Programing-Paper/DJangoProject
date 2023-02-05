@@ -8,6 +8,7 @@ class Cargo(models.Model):
     sueldo = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Sueldo')
    
 class Empleado(models.Model):
+    documento = models.CharField(max_length=11, primary_key=True, verbose_name="Documento de Identidad")
     nombres=models.CharField(max_length=60, verbose_name="Nombres")
     apellidos=models.CharField(max_length=60, verbose_name="Apellidos")
     # cargoid=models.ForeignKey( Cargo, on_delete=models.CASCADE, blank=False , null=True ,  verbose_name="Cargo")

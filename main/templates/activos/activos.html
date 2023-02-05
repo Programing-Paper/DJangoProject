@@ -62,43 +62,13 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="" type="POST">
+                            <form action="" method="POST">
                                 {{form|crispy}}
                                 {% csrf_token %}
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
-                            </form>
-                            <!-- <form action="insertarDatos" method="POST">
-                                <div class="form-activos">
-                                    <label for="activo">Id activo</label>
-                                    <input type="number" placeholder="Ingrese Activo" minlength="2" maxlength="4" class='form-control' required name='activo' />
-                                    <input hidden type="number" name='idempleado' value='22222222'></input>
-                                    <label for="estado">Estado</label>
-                                    <select required name="estado" id="estado" class='form-control' style="width: 92%; margin-left: 15px;">
-                                        <option value="0">Seleccione...</option>
-                                            <option value=""></option>
-                                    </select>
-                                    <label for="marca">Marca</label>
-                                    <input type="text" placeholder="Ingrese marca" minlength="2" maxlength="25" class='form-control' required name='marca' />
-                                    <label for="serie">Serial</label>
-                                    <input type="text" placeholder="Ingrese serial" minlength="4" maxlength="25" class='form-control' required name='serie' />
-                                    <label for="so">Sistema Operativo</label>
-                                    <input type="text" placeholder="Sistema Operativo" minlength="4" maxlength="10" class='form-control' required name='so' />
-                                    <label for="tipo">Tipo de Dispositivo</label>
-                                    <input type="text" placeholder="Ingrese Tipo" minlength="4" maxlength="10" class='form-control' required name='tipo' />
-                                    <label for="fecha">Fecha de Ingreso</label>
-                                    <input type="date" class='form-control' required name='fecha' />
-                                </div>
-                                <div class="form-textarea">
-                                    <label for="caract">Características</label>
-                                    <textarea placeholder="Información del Activo" minlength="7" maxlength="2000" class='form-control' required name='caract'></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div> -->
                             </form>
                         </div>
                     </div>
@@ -121,17 +91,47 @@
                         <th>MARCA</th>
                         <th>FECHA</th>
                         <th>OPCIONES</th>
+                        <th>FECHA</th>
                     </tr>
                 </thead>
-                <tbody class='textwhite'></tbody>    
+                <tbody class='textwhite'>
+                </tbody>    
             </table>
         </div>
     </main>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
+
+<!-- DataTables  & Plugins -->
+<script src="{% static 'datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'jszip/jszip.min.js' %}"></script>
+<script src="{% static 'pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+<script>
+    $(function () {
+        $("#tableactivos").DataTable({
+            responsive: true,
+            scrollCollapse: false,
+            ordering: false,
+            info: false,
+            // processing: true,
+            // serverSide: true,
+            pageLength: 10,
+            lengthChange: false,
+            // "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#tableactivos_wrapper .col-md-6:eq(0)');
+    });
+</script>
 
 {% endblock contenido %}
 

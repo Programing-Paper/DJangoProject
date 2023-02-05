@@ -394,7 +394,6 @@ footer h1{
 
 
 .modal-users{
-    height: 636px;
     background-color: var(--color-blanco);
 }
 .modal-users select{
@@ -479,7 +478,6 @@ footer h1{
 /* formulario Novedades */
 
 .modal-novedades{
-    height: 490px;
     background-color: var(--color-blanco);
 }
 

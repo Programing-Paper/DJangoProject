@@ -12,6 +12,6 @@ class Admin(models.Model):
         ACTIVO='1', _('Activo')
         INACTIVO='0', _('Inactivo')
     userestado= models.CharField(max_length=1, verbose_name="Estado")
-    # empleadoid=models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Empleado")
+    empleadoid=models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Empleado")
 
 

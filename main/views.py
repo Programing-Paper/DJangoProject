@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.defaults import page_not_found
 from django.contrib import messages
+from configuracion.models import Admin
 # from django.http import HttpResponse
 # from django.http import JsonResponse
 # from activos.models import Activo
@@ -20,10 +21,14 @@ def informacion(request):
     return render(request,'informacion.pdf',context)
 
 def inicio(request):
+
+    # usuario = Admin.objects.all()
+    # if request.method == "POST":
+    
     context = {}
     return render(request,'index.html',context)
 
-def error_404(request,exception):
+def error_404(request, exception):
     return page_not_found(request, '404.html')
 
 

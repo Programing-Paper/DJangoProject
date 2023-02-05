@@ -7,3 +7,4 @@ class EmpleadoForm(ModelForm):
     class Meta:
         model = Empleado
         exclude = ['estado']
+

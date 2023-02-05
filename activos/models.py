@@ -8,6 +8,7 @@ from usuarios.models import Empleado
 # Create your models here.
 
 class Activo(models.Model):
+    idactivo = models.CharField(max_length=6, primary_key=True, default='0', verbose_name='Numero activo')
     serial = models.CharField(max_length=25, verbose_name="Serial")
     so = models.CharField(max_length=10, verbose_name="Sistama operativo")
     marca = models.CharField(max_length=25, verbose_name="Tipo de dispositivo")
@@ -24,7 +25,7 @@ class Activo(models.Model):
         asignado='1', _('Asignado')
         creado='0', _('Creado')
     estado = models.CharField(max_length=1,choices=Estado.choices, default=Estado.creado, verbose_name='Estado')
-    empleadoid=models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Empleado")
+    empleadoid=models.ForeignKey(Empleado, on_delete=models.CASCADE,null=True,blank=False, verbose_name="Empleado")
 
 
 

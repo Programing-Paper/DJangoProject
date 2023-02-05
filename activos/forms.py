@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from django import forms
+# from django import forms
 from activos.models import Activo
 
 class ActivoForm(ModelForm):
