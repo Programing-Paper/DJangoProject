@@ -9,13 +9,14 @@
         <h1>Empleados</h1>
 
         <div class='opcionesnav-users'>
-            <a href="../pdf/pdfUsuarios.php" target="_blank"><img src="{% static '\img\pdf.png' %}"></a>
-            <a href="../excel/excelUsuarios.php"><img src="{% static '\img\excel1.png' %}"></a>
-            <!-- Button trigger modal -->
+            <a href="{% url 'crearcargo' %}">
+                <button type="button" class="botoncolor">
+                    Agregar cargo
+                </button>
+            </a>
             <button type="button" class="botoncolor" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Registrar empleados
             </button>
-
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -85,22 +86,33 @@
                         <th>Opciones</th>
                     </tr>
                 </thead>
-                <tbody class='textwhite'></tbody>    
+                <tbody class='textwhite'></tbody>   
             </table>
         </div>
     </main>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-
+      
+<!-- DataTables  & Plugins -->
+<script src="{% static 'datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'jszip/jszip.min.js' %}"></script>
+<script src="{% static 'pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.colVis.min.js' %}"></script>
 
 <script type="text/javascript">
 
+const link = "{% url 'editarusuario' %}";
+
     $(document).ready(function() {
         $('#tableempleados').DataTable({
-            dom: 'frtip',
+            dom: 'Bfrtip',
             responsive: true,
             scrollCollapse: false,
             ordering: false,
@@ -108,6 +120,7 @@
             processing: true,
             serverSide: true,
             pageLength: 10,
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
             ajax: {
                 url: "{% url 'datosusuarios' %}",
                 dataSrc: "datos",
@@ -121,16 +134,21 @@
                 {data: 'estado'},
                 {data: 'telefono'},
                 {data: 'direccion'},
-                {data: 'opciones'},
+                {
+                    data: 'documento',
+                    render: function (data, type, row) {
+                    return `<a href="${link}?id=${data}" class="btn btn-primary btn-sm">Editar</a>`;
+                    }
+                }
                 // {
                 // data: null,
-                // className: "",
-                // defaultContent:"<a href='{{url}}' ><i class='bi bi-pencil-square'></i></a>",
-                // defaultContent:"<form method='POST'><i class='bi bi-pencil-square'></i></form>",
-                // headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                // },
+                //     render: function (data, type, row) {
+                //         const link = linkTemplate.replace();
+                //         return '<button class="btn btn-primary btn-sm">Editar</button>';
+                //     }
+                // }
             ],
-
+            
             "language": {
                 "decimal": "",
                 "emptyTable": "No hay registros",
@@ -151,14 +169,20 @@
                     "previous": "Anterior"
                 }
             }
-        });
-    });
+        }).buttons().container().appendTo('#tableempleados_wrapper .col-md-6:eq(0)');
 
-function goToPage() {
-    window.location.href = 'activos';
-}
-document.getElementById("editaractivos").addEventListener("click", goToPage);
+
+    //     $('#tableempleados tbody').on('click', '.btn-sm', function () {
+    //         const data = $('#tableempleados').DataTable().row($(this).parents('tr')).data();
+    //         const link = linkTemplate.replace();
+    //         window.location.href = link;
+    //     });
+    });
 
 </script>
 
+
 {% endblock contenido %}
+
+
+

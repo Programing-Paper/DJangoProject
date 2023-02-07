@@ -1,7 +1,6 @@
 {% extends 'partials/body.html' %}
 {% load static %}
-
-
+{% load crispy_forms_tags %}
 
 {% block contenido %}
 <div class='main-principal'></div>
@@ -23,7 +22,15 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="insertarDatos" method="POST">
+                            <form action="" method="POST">
+                                {{form|crispy}}
+                                {% csrf_token %}
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                            <!-- <form action="insertarDatos" method="POST">
                                 <div class="form-novedades">
                                     <label for="fecha">Fecha</label>
                                     <input type="date" class='form-control' required name='fecha' />
@@ -49,7 +56,7 @@
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
                 </div>
@@ -66,7 +73,7 @@
                         <th>DESCRIPCION</th>
                         <th>AFECTADO</th>
                         <th>FECHA</th>
-                        <th>ACTIVO</th>
+                        <th>ESTADO</th>
                         <th>OPCIONES</th>
                     </tr>
                 </thead>
@@ -76,45 +83,61 @@
     </main>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="{% static 'datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'jszip/jszip.min.js' %}"></script>
+<script src="{% static 'pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
 <script type="text/javascript">
+
+const link = "{% url 'editarnovedades' %}";
+
     $(document).ready(function() {
         $('#tablenovedades').DataTable({
-            dom: 'frtip',
+            dom: 'Bfrtip',
             responsive: true,
             scrollCollapse: false,
             ordering: false,
             info: false,
-            'processing': true,
-            'serverSide': true,
-            'serverMethod': 'POST',
-            'ajax': {
-                'url': 'datosnovedades',
+            processing: true,
+            serverSide: true,
+            pageLength: 10,
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            ajax: {
+                url: "{% url 'datosnovedades' %}",
+                dataSrc: "datos",
+                type: 'GET',
             },
-            'columns': [{
-                    data: 'id_novedad'
-                },
+            columns: [
+                {data: 'id'},
+                {data: 'descripcion'},
+                {data: 'fecha'},
+                {data: 'empleadoid'},
+                {data: 'estado'},
                 {
-                    data: 'descripcion'
-                },
-                {
-                    data: 'nombre'
-                },
-                {
-                    data: 'fecha'
-                },
-                {
-                    data: 'activo'
-                },
-                {
-                    data: 'editar'
-                },
+                    data: 'documento',
+                    render: function (data, type, row) {
+                    return `<a href="${link}?id=${data}" class="btn btn-primary btn-sm">Editar</a>`;
+                    }
+                }
+                // {
+                // data: null,
+                //     render: function (data, type, row) {
+                //         const link = linkTemplate.replace();
+                //         return '<button class="btn btn-primary btn-sm">Editar</button>';
+                //     }
+                // }
             ],
-            // "pageLength": 2,
-            // order: [[3, 'desc']],
-
+            
             "language": {
                 "decimal": "",
                 "emptyTable": "No hay registros",
@@ -135,7 +158,15 @@
                     "previous": "Anterior"
                 }
             }
-        });
+        }).buttons().container().appendTo('#tablenovedades_wrapper .col-md-6:eq(0)');
+
+
+    //     $('#tableempleados tbody').on('click', '.btn-sm', function () {
+    //         const data = $('#tableempleados').DataTable().row($(this).parents('tr')).data();
+    //         const link = linkTemplate.replace();
+    //         window.location.href = link;
+    //     });
     });
+
 </script>
 {% endblock contenido %}

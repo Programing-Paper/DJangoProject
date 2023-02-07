@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from configuracion.forms import AdminForm, UpdateProfile
 from configuracion.models import Admin
+# from usuarios.models import Empleado
 
 # Create your views here.
 
@@ -19,12 +20,12 @@ def config(request):
     else:
         form = AdminForm()
 
-    usuarios = Admin.objects.all()
+    admins = Admin.objects.all()
 
     context = {
         'titulo': titulo,
         'form': form,
-        'usuarios': usuarios,
+        'admins': admins,
         'update': UpdateProfile
     }
     return render(request, 'configuracion/config.html', context)

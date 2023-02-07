@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from django.views.defaults import page_not_found
-from django.contrib import messages
-from configuracion.models import Admin
+# from django.contrib import messages
+# from configuracion.models import Admin
 # from django.http import HttpResponse
 # from django.http import JsonResponse
-# from activos.models import Activo
 # from django.contrib.auth import authenticate
 
 

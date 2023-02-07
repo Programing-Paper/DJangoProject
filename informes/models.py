@@ -1,6 +1,6 @@
 from django.db import models
 from usuarios.models import Empleado
-from activos.models import Activo
+# from activos.models import Activo
 
 # Create your models here.
 
@@ -12,5 +12,4 @@ class Movimientos(models.Model):
     descripcion= models.CharField(max_length=200, verbose_name='Descripcion')
 
 
-    
 

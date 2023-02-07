@@ -1,6 +1,6 @@
 from django.forms import ModelForm, widgets
-from django import forms
-from usuarios.models import Empleado
+from django import forms 
+from usuarios.models import Empleado, Cargo
 
 
 class EmpleadoForm(ModelForm):
@@ -8,3 +8,7 @@ class EmpleadoForm(ModelForm):
         model = Empleado
         exclude = ['estado']
 
+class CargoForm(ModelForm):
+    class Meta:
+        model = Cargo
+        fields = '__all__'

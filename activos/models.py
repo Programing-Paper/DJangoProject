@@ -1,19 +1,19 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from usuarios.models import Empleado
-# ñ
+
 # from django.core.validators import MinValueValidator
 # from django.utils import timezone
 
 # Create your models here.
 
 class Activo(models.Model):
-    idactivo = models.CharField(max_length=6, primary_key=True, default='0', verbose_name='Numero activo')
+    idactivo = models.CharField(max_length=6, primary_key=True, verbose_name='Numero activo')
     serial = models.CharField(max_length=25, verbose_name="Serial")
     so = models.CharField(max_length=10, verbose_name="Sistama operativo")
     marca = models.CharField(max_length=25, verbose_name="Tipo de dispositivo")
     tipo = models.CharField(max_length=10, verbose_name="Caracteristicas")
-    fecha = models.DateField(verbose_name="Fecha de registro", help_text=u"MM/DD/AAAA")
+    fecha = models.DateField(auto_now_add=True)
     observaciones = models.TextField(max_length=200, verbose_name="Caracteristicas")
     class EstadoActivo(models.TextChoices):
         nuevo='3', _('Nuevo')

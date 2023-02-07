@@ -4,14 +4,16 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 class Cargo(models.Model):
-    nomcargo = models.CharField(max_length=100, verbose_name='Cargo')
-    sueldo = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Sueldo')
+    nomcargo = models.CharField(max_length=70, verbose_name='Cargo')
+    sueldo = models.CharField(max_length=10, blank=True, verbose_name='Sueldo')
+    def __str__(self)->str:
+        return "%s" %(self.nomcargo)
    
 class Empleado(models.Model):
     documento = models.CharField(max_length=11, primary_key=True, verbose_name="Documento de Identidad")
     nombres=models.CharField(max_length=60, verbose_name="Nombres")
     apellidos=models.CharField(max_length=60, verbose_name="Apellidos")
-    # cargoid=models.ForeignKey( Cargo, on_delete=models.CASCADE, blank=False , null=True ,  verbose_name="Cargo")
+    cargoid=models.ForeignKey(Cargo, on_delete=models.CASCADE, blank=False , null=True, verbose_name="Cargo")
     class Ciudad(models.TextChoices):
         medellin='medellin', _('Medellin')
         bogota='bogota', _('Bogota')
@@ -27,7 +29,11 @@ class Empleado(models.Model):
     telefono=models.CharField(max_length=150, verbose_name="Teléfono")
     direccion=models.CharField(max_length=70, verbose_name="Dirección")
 
+    def __str__(self)->str:
+        return "%s" %(self.nombres)
 
+        
+    
 
 
 

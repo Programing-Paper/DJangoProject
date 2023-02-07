@@ -1,8 +1,9 @@
 # from http.client import HTTPResponse
 from multiprocessing import context
 from django.shortcuts import render, redirect
-from usuarios.models import Empleado
-from usuarios.forms import EmpleadoForm
+from usuarios.models import Empleado, Cargo
+from django.contrib import messages
+from usuarios.forms import EmpleadoForm, CargoForm
 from django.views import generic
 from django.http import JsonResponse
 from django.db.models import Q
@@ -23,10 +24,16 @@ def usuarios(request):
         form = EmpleadoForm(request.POST)
         if form.is_valid:
             form.save()
+            messages.success(
+                request,f"Se agregó el usuario {request.POST['nombres']} exitosamente!"
+            )
             return redirect("usuario")
         else:
-            form= EmpleadoForm()
-            print("Error") 
+            messages.error(
+                request,f"Error al agregar {request.POST['nombres']}!"
+            ) 
+    else:
+        form= EmpleadoForm()
 
     title= 'Informacion usuarios'
     context={
@@ -82,7 +89,6 @@ def dt_serverside(request):
     except EmptyPage:
         obj = paginator.page(paginator.num_pages).object_list
 
-    url= "editarusuario"
     datos = [
         {
             "documento" : d.documento,
@@ -92,7 +98,7 @@ def dt_serverside(request):
             "estado" : d.estado,
             "telefono" : d.telefono,
             "direccion" : d.direccion,
-            "opciones" : (f"<a href={url} ><i class='bi bi-pencil-square'></i></a>"),
+            # "opciones" : (f"<a href='' ><i class='bi bi-pencil-square'></i></a>"),
 
         } for d in obj
     ]
@@ -100,15 +106,35 @@ def dt_serverside(request):
     context["datos"] = datos
     return JsonResponse(context, safe=False)
 
-def editarusuario(request, cc):
+def editarusuario(request):
     title= 'Editar usuario'
-    documento = Empleado.objects.get(documento=cc)
-    
+    # documento = Empleado.objects.get(documento=cc)
 
     context={
         'title': title,
     }
     return render(request,'usuarios/editarUsuario.html', context)
+
+def crearcargo(request):
+    cargos = Cargo.objects.all()
+    cargoform = CargoForm()
+    if request.method == "POST":
+        print("entro aqui")
+        cargoform = CargoForm(request.POST)
+        if cargoform.is_valid:
+            cargoform.save()
+            return redirect("crearcargo")
+        else:
+            cargoform= CargoForm()
+            print("Error")
+
+    title= 'Agregar cargos'
+    context={
+        'title': title,
+        'cargoform': cargoform,
+        'cargos': cargos
+    }
+    return render(request,'usuarios/crearcargos.html', context)
 
 
 

@@ -2,6 +2,13 @@ from django.shortcuts import render, redirect
 from multiprocessing import context
 from activos.forms import ActivoForm
 from activos.models import Activo
+from django.contrib import messages
+from django.views import generic
+from django.http import JsonResponse
+from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
 # from django.views import generic
 # from django.http import JsonResponse
 # from django.db.models import Q
@@ -11,49 +18,26 @@ from activos.models import Activo
 
 # Create your views here.
 
+
 def activos(request):
 
-    # activos = Activo.objects.all()
-    # form = ActivoForm()
-
-    # if request.method == "GET":
-    #     print('entro aqui al get')
-    #     return render(request, 'activos', {
-    #         'form' : ActivoForm()
-    #     })
-    # else:
-    #     form = ActivoForm(request.POST)
-    #     print(request.POST)
-    #     if form.is_valid:
-    #         form.save()
-    #         print('se registro el activo correctamente')
-    #         return redirect("activos")
-    #     else:
-    #         form= ActivoForm()
-    #         print("Error")
-    
-    # title= 'activo'
-    # context={
-    #     'title': title,
-    #     'activos': activos,
-    #     'form': form
-    # }
-
-    # print('entra aqui')
-
-    # return render(request,'activos/activos.html', context)
-
     titulo = "Modulo activos"
+
     form = ActivoForm()
     if request.method == "POST":
         form = ActivoForm(request.POST)
         print(request.POST)
         if form.is_valid():
+            print("entro aqui")
             form.save()
-            print('entro aqui')
-            return redirect('activos')
+            messages.success(
+                request,f"Se agregó el activo {request.POST['idactivo']} exitosamente!"
+            )
+            return redirect('activo')
         else:
-            print("Error")
+            messages.error(
+                request,f"Error al agregar {request.POST['idactivo']}!"
+            )
     else:
         form = ActivoForm()
 
@@ -67,7 +51,79 @@ def activos(request):
 
     return render(request, 'activos/activos.html', context)
 
+class Dtserverside(generic.TemplateView):
+    template_name = 'activos'
+    
+def dt_serverside(request):
+    context= {}
 
+    dt = request.GET
+
+    draw = int(dt.get("draw"))
+    start = int(dt.get("start"))
+    length = int(dt.get("length"))
+    search = dt.get("search[value]")
+
+
+    registros = Activo.objects.all().order_by("idactivo")
+
+    if search:
+        registros = registros.filter(
+                Q(idactivo__icontains=search) |
+                Q(serial__icontains=search) |
+                Q(so__icontains=search) |
+                Q(marca__icontains=search) |
+                Q(tipo__icontains=search) |
+                Q(fecha__icontains=search) |
+                Q(observaciones__icontains=search) |
+                Q(situacion__icontains=search) 
+        )
+    
+    recordsTotal = registros.count()
+    recordsFiltered = recordsTotal
+
+    # preparando la salida 
+
+    context['draw'] = draw
+    context['recordsTotal'] = recordsTotal
+    context['recordsFiltered'] = recordsFiltered
+
+    reg = registros[start:start + length]
+    paginator = Paginator(reg,length)
+
+    try:
+        obj = paginator.page(draw).object_list
+    except PageNotAnInteger:
+        obj = paginator.page(draw).object_list
+    except EmptyPage:
+        obj = paginator.page(paginator.num_pages).object_list
+
+    datos = [
+        {
+            "idactivo" : d.idactivo,
+            "serial" : d.serial,
+            "so" : d.so,
+            "marca" : d.marca,
+            "tipo" : d.tipo,
+            "fecha" : d.fecha,
+            "observaciones" : d.observaciones,
+            "situacion" : d.situacion,
+            "empleadoid" : d.empleadoid,
+
+        } for d in obj
+    ]
+
+    context["datos"] = datos
+    return JsonResponse(context, safe=False)
+
+def editaractivo(request):
+    title= 'Editar activo'
+    # documento = Activo.objects.get(documento=cc)
+
+    context={
+        'title': title,
+    }
+    return render(request,'activos/editarActivos.html', context)
 
 
 

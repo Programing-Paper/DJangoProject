@@ -8,7 +8,7 @@
 {% block stylesheet %}
 
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css"> -->
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css"> -->
   
 {% endblock stylesheet %}
   
@@ -167,19 +167,19 @@
       </tr>
     </thead>
     <tbody>    
-      {% for usuario in usuarios %}
+      {% for admin in admins %}
         <tr class='textwhite'>
-          <td>{{usuario.id}}</td>
-          <td>{{usuario.correo}}</td>
-          <td>{{usuario.password}}</td>
-          <td>{{usuario.userestado}}</td>
+          <td>{{admin.id}}</td>
+          <td>{{admin.correo}}</td>
+          <td>{{admin.password}}</td>
+          <td>{{admin.userestado}}</td>
           <td>
-            {% if usuario.userestado == '1' %}
-                <a class='btn btn-dark btn-sm' href="{% url 'cambiarestado' usuario.userestado %}"><i class="bi bi-check2"></i></a>
+            {% if admin.userestado == '1' %}
+                <a class='btn btn-dark btn-sm' href="{% url 'cambiarestado' admin.userestado %}"><i class="bi bi-check2"></i></a>
             {% else %}
                 <a class='btn btn-dark btn-sm' href=""><i class="bi bi-x-lg"></i></a>
             {% endif %}      
-            <a class='btn btn-primary btn-sm' href="{% url 'delete' usuario.id %}"><i class="bi bi-trash3"></i></a>
+            <a class='btn btn-primary btn-sm' href="{% url 'delete' admin.id %}"><i class="bi bi-trash3"></i></a>
           </td>
         </tr>
         {% endfor %}
@@ -209,41 +209,6 @@
     }
   }
 </script>
-
-<script>
-  function cambiar(idadmin, estado) {
-
-    $.ajax({
-      type: "POST",
-      data: "estado=" + estado + "&id=" + idadmin,
-      url: "update2.php",
-      success: function(respuesta) {
-        respuesta = respuesta.trim();
-        if (respuesta == 1) {
-
-          $.toast({
-            heading: 'Correcto!',
-            text: 'Se activo el usuario',
-            icon: 'succes',
-            transition: 'plain',
-            position: 'top-right',
-            loaderBg: 'white'
-          })
-        } else {
-          $.toast({
-            heading: 'Correcto',
-            text: 'Se desactivo el usuario!',
-            icon: 'error',
-            transition: 'plain',
-            position: 'top-right',
-            loaderBg: 'white'
-          })
-        }
-      }
-    });
-  }
-
-  onclick = 'cambiar()'</script>
 
 {% endblock contenido %}
 
