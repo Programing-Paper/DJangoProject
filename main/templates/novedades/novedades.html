@@ -8,11 +8,8 @@
     <nav class="containernav-nov">
         <h1>Novedades</h1>
         <div class="opcionesnav-nov">
-            <a href="pdfNovedades" target="_blank"><img src="{% static '\img\pdf.png' %}"></a>
-            <a href="excelNovedades"><img src="{% static '\img\excel1.png' %}"></a>
-            <input class="botoncolor" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" value="Registrar novedades">
-
             <!-- Button trigger modal -->
+            <input class="botoncolor" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" value="Registrar novedades">
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -23,40 +20,13 @@
                         </div>
                         <div class="modal-body">
                             <form action="" method="POST">
-                                {{form|crispy}}
+                                {{formnovedad|crispy}}
                                 {% csrf_token %}
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" name='formnovedad' class="btn btn-primary">Guardar</button>
                                 </div>
                             </form>
-                            <!-- <form action="insertarDatos" method="POST">
-                                <div class="form-novedades">
-                                    <label for="fecha">Fecha</label>
-                                    <input type="date" class='form-control' required name='fecha' />
-                                    <label for="idempleado">Usuario afectado</label>
-                                    <select required name="idempleado" id="idempleado" class='form-control' style="width: 92%; margin-left: 15px;">
-                                        <option value="0">Seleccione...</option>
-                                            <option value=""></option>
-
-                                    </select>
-                                    <label for="idactivo">Activo</label>
-                                    <select required name="idactivo" id="idactivo" class='form-control' style="width: 92%; margin-left: 15px;">
-                                        <option value="0">Seleccione...</option>
-                                            <option value=""></option>
-                                    </select>
-                                </div>
-                                <div class="contentform-nov">
-                                    <div class="formtextarea-nov">
-                                        <label for="descripcion">Descripción</label>
-                                        <textarea placeholder="Información del Activo" class='form-control' required name='descripcion'></textarea>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
-                            </form> -->
                         </div>
                     </div>
                 </div>
@@ -74,6 +44,7 @@
                         <th>AFECTADO</th>
                         <th>FECHA</th>
                         <th>ESTADO</th>
+                        <th>OPCIONES</th>
                         <th>OPCIONES</th>
                     </tr>
                 </thead>
@@ -121,21 +92,15 @@ const link = "{% url 'editarnovedades' %}";
                 {data: 'id'},
                 {data: 'descripcion'},
                 {data: 'fecha'},
-                {data: 'empleadoid'},
+                {data: 'empleado'},
                 {data: 'estado'},
+                {data: 'activo'},
                 {
-                    data: 'documento',
+                    data: 'id',
                     render: function (data, type, row) {
                     return `<a href="${link}?id=${data}" class="btn btn-primary btn-sm">Editar</a>`;
                     }
                 }
-                // {
-                // data: null,
-                //     render: function (data, type, row) {
-                //         const link = linkTemplate.replace();
-                //         return '<button class="btn btn-primary btn-sm">Editar</button>';
-                //     }
-                // }
             ],
             
             "language": {
@@ -159,14 +124,8 @@ const link = "{% url 'editarnovedades' %}";
                 }
             }
         }).buttons().container().appendTo('#tablenovedades_wrapper .col-md-6:eq(0)');
-
-
-    //     $('#tableempleados tbody').on('click', '.btn-sm', function () {
-    //         const data = $('#tableempleados').DataTable().row($(this).parents('tr')).data();
-    //         const link = linkTemplate.replace();
-    //         window.location.href = link;
-    //     });
     });
 
 </script>
+
 {% endblock contenido %}

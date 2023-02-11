@@ -1,6 +1,9 @@
 {% extends 'partials/body.html' %}
 {% load static %}
 
+
+{% block contenido %}
+    
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <div class="main-principal"></div>
 <div class="container">
@@ -47,7 +50,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary" name="guardar">Guardar</button>
-                <a href="" class="btn btn-dark volver">Volver</a>
+                <a href="{% url 'novedad' %}" class="btn btn-dark volver">Volver</a>
             </form>
         </div>
     </div>
@@ -60,3 +63,5 @@
 </body>
 
 </html>
+
+{% endblock contenido %}

@@ -10,40 +10,36 @@
     <nav class="containernav-activos">
         <h1>Activos</h1>
         <div class='opcionesnav-activos'>
-
+            <!-- boton modal -->
             <button type="button" class="botoncolor" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
                 Asignar activo
             </button>
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <div class="modal-content modal_asignar" style="height: 360px;">
+                    <div class="modal-content modal_asignar">
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">Asignar activo</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="" method="POST">
-                            {% csrf_token %}
-                            <div class="modal-body form-activos">
-                                <label for="idactivo">Activos</label>
-                                <select required name="idactivo" id="idactivo" class='form-control' style="width: 92%;margin-left: 15px;">
-                                    <option value="120">Seleccione...</option>
-                                        <option value=""></option>
+                        <div class="modal-body">
+                            <form action="" method="POST">
+                                {{asignar|crispy}}
+                                {% csrf_token %}
+                                <label for="activo">Numero activo</label>
+                                <select class='select form-select mb-lg-3' name="" id="activo">
+                                    <option value="" selected="">---------</option>
+                                    {% for activo in activos %}
+                                    <option value="{{activo.idactivo}}">{{activo.idactivo}} {{activo.tipo}} {{activo.marca}}</option>
+                                    {% endfor %}
                                 </select>
-                                <label for="asig-empl">Empleado</label>
-                                <select required name="idempleado" id="idempleado" class='form-control' style="width: 92%;margin-left: 15px;">
-                                    <option value="hola">Seleccione...</option>
-                                        <option value=""></option>
-                                </select>
-                                <label for="fecha">Fecha asignación</label>
-                                <input type="date" class='form-control w-50' required name='fecha' />
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary">Asignar</button>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" name="asignarform" class="btn btn-primary">Guardar</button>
+                                </div>
+                             </form>
+                        </div>
                     </div>
-                    </form>
                 </div>
             </div>
             <!-- Button trigger modal registrar activos -->
@@ -82,14 +78,12 @@
                 <thead>
                     <tr class='textwhite'>
                         <th>ID</th>
-                        <th>SERIAL</th>
-                        <th>SO</th>
-                        <th>MARCA</th>
+                        <th>ESTADO</th>
+                        <th>RESPONSABLE</th>
                         <th>TIPO</th>
+                        <th>MARCA</th>
                         <th>FECHA</th>
-                        <th>OBSERBACIONES</th>
-                        <th>SITUACION</th>
-                        <th>OPCIONES</th>
+                        <th>SERIAL</th>
                         <th>OPCIONES</th>
                     </tr>
                 </thead>
@@ -136,14 +130,14 @@
                 },
                 columns: [
                     {data: 'idactivo'},
-                    {data: 'serial'},
-                    {data: 'so'},
-                    {data: 'marca'},
-                    {data: 'tipo'},
-                    {data: 'fecha'},
-                    {data: 'observaciones'},
                     {data: 'situacion'},
                     {data: 'empleadoid'},
+                    {data: 'tipo'},
+                    {data: 'marca'},
+                    {data: 'fecha'},
+                    // {data: 'observaciones'},
+                    // {data: 'situacion'},
+                    {data: 'serial'},
                     {
                         data: 'idactivo',
                         render: function (data, type, row) {

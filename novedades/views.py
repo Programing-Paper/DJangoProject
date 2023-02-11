@@ -17,35 +17,38 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def novedades(request):
-    usuarios = Novedad.objects.all()
+    novedades = Novedad.objects.all()
     formnovedad = NovedadForm()
-    if request.method == "POST":
+    if request.method == "POST" and 'formnovedad' in request.POST:
+        print('entro aqui')
         formnovedad = NovedadForm(request.POST)
         if formnovedad.is_valid:
+            print(request.POST)
             formnovedad.save()
-            # messages.success(
-            #     request,f"Se agregó la novedad exitosamente!"
-            # )
+            print('entro aqui')
+            messages.success(
+                request,f"Se agregó la novedad exitosamente!"
+            )
             return redirect("novedad")
         else:
             messages.error(
                 request,f"Error al agregar la novedad!"
             ) 
     else:
-        formnovedad= NovedadForm()
+        formnovedad = NovedadForm()
 
     title= 'Informacion usuarios'
     context={
         'title': title,
-        'usuarios': usuarios,
-        'form': formnovedad,
+        'novedades': novedades,
+        'formnovedad': formnovedad,
     }
     return render(request,'novedades/novedades.html', context)
 
-class Dtserverside(generic.TemplateView):
+class Dtnovedades(generic.TemplateView):
     template_name = 'novedades'
 
-def dt_serverside(request):
+def dtnovedades(request):
     context= {}
 
     dt = request.GET
@@ -62,8 +65,9 @@ def dt_serverside(request):
         registros = registros.filter(
                 Q(id__icontains=search) |
                 Q(fecha__icontains=search) |
-                Q(empleadoid__icontains=search) |
+                Q(empleado_id__icontains=search) |
                 Q(estado__icontains=search) | 
+                Q(activo_id__icontains=search) | 
                 Q(descripcion__icontains=search)
         )
     
@@ -91,8 +95,9 @@ def dt_serverside(request):
             "id" : d.id,
             "descripcion" : d.descripcion,
             "fecha" : d.fecha,
-            "empleadoid" : d.empleadoid,
+            "empleado" : d.empleado_id,
             "estado" : d.estado,
+            "activo" : d.activo_id,
 
         } for d in obj
     ]
@@ -100,7 +105,7 @@ def dt_serverside(request):
     context["datos"] = datos
     return JsonResponse(context, safe=False)
 
-def editarusuario(request):
+def editarnovedad(request):
     title= 'Editar novedades'
     # documento = Novedad.objects.get(documento=cc)
 

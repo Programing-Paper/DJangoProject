@@ -159,17 +159,19 @@
   <table id="config" class="table table-striped table-sm">
     <thead>
       <tr class='textwhite'>
-        <th>ID</th>
+        <th>Id</th>
+        <th>Empleado</th>
         <th>Correo</th>
         <th>Imagen</th>
-        <th>Imagen</th>
         <th>Estado</th>
+        <th>Opciones</th>
       </tr>
     </thead>
     <tbody>    
       {% for admin in admins %}
         <tr class='textwhite'>
           <td>{{admin.id}}</td>
+          <td>{{admin.empleadoid}}</td>
           <td>{{admin.correo}}</td>
           <td>{{admin.password}}</td>
           <td>{{admin.userestado}}</td>

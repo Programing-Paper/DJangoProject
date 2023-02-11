@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from multiprocessing import context
-from activos.forms import ActivoForm
+from activos.forms import ActivoForm, AsignarForm
 from activos.models import Activo
 from django.contrib import messages
 from django.views import generic
@@ -9,20 +9,17 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-# from django.views import generic
-# from django.http import JsonResponse
-# from django.db.models import Q
-# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# from django.views.generic import View
-
 
 # Create your views here.
 
 
 def activos(request):
-
     titulo = "Modulo activos"
 
+    # formulario registrar activos
+
+    activos = Activo.objects.all()
+    asignar = AsignarForm()
     form = ActivoForm()
     if request.method == "POST":
         form = ActivoForm(request.POST)
@@ -41,20 +38,22 @@ def activos(request):
     else:
         form = ActivoForm()
 
-    activos = Activo.objects.all()
+    # formulario asignar activos
 
+   
     context = {
         'titulo': titulo,
         'form': form,
         'activos': activos,
+        'asignar': asignar
     }
 
     return render(request, 'activos/activos.html', context)
 
-class Dtserverside(generic.TemplateView):
+class Dtactivos(generic.TemplateView):
     template_name = 'activos'
     
-def dt_serverside(request):
+def dt_activos(request):
     context= {}
 
     dt = request.GET
@@ -76,7 +75,8 @@ def dt_serverside(request):
                 Q(tipo__icontains=search) |
                 Q(fecha__icontains=search) |
                 Q(observaciones__icontains=search) |
-                Q(situacion__icontains=search) 
+                Q(situacion__icontains=search) |
+                Q(empleadoid_id__icontains=search)    
         )
     
     recordsTotal = registros.count()
@@ -108,7 +108,7 @@ def dt_serverside(request):
             "fecha" : d.fecha,
             "observaciones" : d.observaciones,
             "situacion" : d.situacion,
-            "empleadoid" : d.empleadoid,
+            "empleadoid" : d.empleadoid_id,
 
         } for d in obj
     ]
@@ -124,6 +124,15 @@ def editaractivo(request):
         'title': title,
     }
     return render(request,'activos/editarActivos.html', context)
+
+# def asignarActivo(request):
+#     title= 'Editar activo'
+#     # documento = Activo.objects.get(documento=cc)
+
+#     context={
+#         'title': title,
+#     }
+#     return render(request,'activos/editarActivos.html', context)
 
 
 

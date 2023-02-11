@@ -13,6 +13,10 @@
      
 } */
 
+.asteriskField {
+    display: none;
+}
+
 body{
     --color-azul: #001b53;
     --color-amovil: #4ca4d8;
