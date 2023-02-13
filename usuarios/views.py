@@ -3,7 +3,7 @@ from multiprocessing import context
 from django.shortcuts import render, redirect
 from usuarios.models import Empleado, Cargo
 from django.contrib import messages
-from usuarios.forms import EmpleadoForm, CargoForm
+from usuarios.forms import EmpleadoForm, CargoForm, UpdateForm
 from django.views import generic
 from django.http import JsonResponse
 from django.db.models import Q
@@ -106,15 +106,6 @@ def dt_serverside(request):
     context["datos"] = datos
     return JsonResponse(context, safe=False)
 
-def editarusuario(request):
-    title= 'Editar usuario'
-    # documento = Empleado.objects.get(documento=cc)
-
-    context={
-        'title': title,
-    }
-    return render(request,'usuarios/editarUsuario.html', context)
-
 def crearcargo(request):
     cargos = Cargo.objects.all()
     cargoform = CargoForm()
@@ -138,10 +129,42 @@ def crearcargo(request):
 
 
 
+def editar_empleados(request):
+    titulo="Usuarios - Editar"
+    pk= request.GET.get('id')
+    form_update=UpdateForm()
+    usuario= Empleado.objects.get(documento=pk)
+    if request.method == "POST":
+        print("Entro aqui")
+        form_update= UpdateForm(request.POST, instance=usuario)
+        if form_update.is_valid():
+            form_update.save()
+            messages.success(
+                request,f"Se actualizo el usuario {request.POST['nombres']} exitosamente!"
+            )
+            return redirect('usuario')
+        else:
+            messages.error(
+                request,f"ocurrio un error al actualizar el usuario {request.POST['nombres']}!"
+            )
+    else:
+        form_update= UpdateForm(instance=usuario)
+
+    context={
+        'titulo':titulo,
+        'form_update':form_update
+    }
+    return render(request,'usuarios/editarUsuario.html',context)
 
 
+# def editarusuario(request):
+#     title= 'Editar usuario'
+#     # documento = Empleado.objects.get(documento=cc)
 
-
+#     context={
+#         'title': title,
+#     }
+#     return render(request,'usuarios/editarUsuario.html', context)
 
 
 

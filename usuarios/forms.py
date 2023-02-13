@@ -12,3 +12,8 @@ class CargoForm(ModelForm):
     class Meta:
         model = Cargo
         fields = '__all__'
+
+class UpdateForm(ModelForm):
+    class Meta:
+        model = Empleado
+        exclude = ['estado', 'documento']

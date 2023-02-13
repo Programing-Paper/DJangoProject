@@ -10,3 +10,9 @@ class NovedadForm(ModelForm):
         widgets={
           'fecha': widgets.DateInput(attrs={'type':'date'}, format='%Y-%m-%d')
         }
+
+class UpdateForm(ModelForm):
+    class Meta:
+        model = Novedad
+        # fields = '__all__'
+        exclude=['estado', 'id']

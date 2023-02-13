@@ -40,11 +40,11 @@
                 <thead>
                     <tr class='textwhite'>
                         <th>ID</th>
-                        <th>DESCRIPCION</th>
                         <th>AFECTADO</th>
+                        <th>ACTIVO</th>
                         <th>FECHA</th>
+                        <th>DESCRIPCION</th>
                         <th>ESTADO</th>
-                        <th>OPCIONES</th>
                         <th>OPCIONES</th>
                     </tr>
                 </thead>
@@ -71,6 +71,8 @@
 <script type="text/javascript">
 
 const link = "{% url 'editarnovedades' %}";
+var CSRF_TOKEN = '{{ csrf_token }}';
+
 
     $(document).ready(function() {
         $('#tablenovedades').DataTable({
@@ -90,16 +92,19 @@ const link = "{% url 'editarnovedades' %}";
             },
             columns: [
                 {data: 'id'},
-                {data: 'descripcion'},
-                {data: 'fecha'},
                 {data: 'empleado'},
-                {data: 'estado'},
                 {data: 'activo'},
+                {data: 'fecha'},
+                {data: 'descripcion'},
+                {data: 'estado'},
                 {
                     data: 'id',
                     render: function (data, type, row) {
-                    return `<a href="${link}?id=${data}" class="btn btn-primary btn-sm">Editar</a>`;
-                    }
+                        return `<form action='${link}' method='GET'>
+                                  <input type='hidden' name='csrfmiddlewaretoken' value='${CSRF_TOKEN}'></input>
+                                  <button type='submit' name='id' value='${data}' class="btn btn-primary btn-sm">Editar</button>
+                                </form>`;
+                    },
                 }
             ],
             

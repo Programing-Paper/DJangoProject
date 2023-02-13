@@ -33,38 +33,6 @@
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
-                            </form>
-                            <!-- <form action="insertarDatos.php?guardar=usuarios&usu=<?php echo $_GET['usu'] ?>" method="POST">
-                                <div class="form-users">
-                                    <label for="idempleado">Documento</label>
-                                    <input type="text" placeholder="Ingrese documento" class='form-control' required name='idempleado' />
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" placeholder="Ingrese nombre" class='form-control' required name='nombre' />
-                                    <label for="telefono">Teléfono</label>
-                                    <input type="text" placeholder="Ingrese Teléfono" class='form-control' required name='telefono' />
-                                    <label for="direccion">Dirección</label>
-                                    <input type="text" placeholder="Ingrese Dirección" class='form-control' required name='direccion' />
-                                    <label for="cargo">Cargo</label>
-                                    <select required name="id_cargo" id="cargo" class='form-control' style="width: 92%; margin-left: 15px;">
-                                        <option value="0">Seleccione...</option>
-                                            <option value="<?php echo $res->id_cargo ?>"></option>
-                                    </select>
-                                    <label for="id_compania">Ciudad</label>
-                                    <select required name="id_compania" id="id_compania" class='form-control' style="width: 92%; margin-left: 15px;">
-                                        <option value="0">Seleccione...</option>
-                                            <option value="<?php echo $res->id_compania ?>"></option>
-                                    </select>
-                                    <label for="id_estadoemp">Estado</label>
-                                    <select required name="id_estadoemp" id="id_estadoemp" class='form-control' style="width: 92%; margin-left: 15px;">
-                                        <option value="0">Seleccione...</option>
-                                            <option value="<?php echo $res->id_estadoemp ?>"></option>
-                                    </select>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div> -->
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -108,7 +76,8 @@
 
 <script type="text/javascript">
 
-const link = "{% url 'editarusuario' %}";
+const link = "{% url 'editarusuarios' %}";
+var CSRF_TOKEN = '{{ csrf_token }}';
 
     $(document).ready(function() {
         $('#tableempleados').DataTable({
@@ -137,9 +106,18 @@ const link = "{% url 'editarusuario' %}";
                 {
                     data: 'documento',
                     render: function (data, type, row) {
-                    return `<a href="${link}?id=${data}" class="btn btn-primary btn-sm">Editar</a>`;
-                    }
+                    return `<form action='${link}' method='GET'>
+                                <input type='hidden' name='csrfmiddlewaretoken' value='${CSRF_TOKEN}'></input>
+                                <button type='submit' name='id' value='${data}' class="btn btn-primary btn-sm">Editar</button>
+                            </form>`;
+                    },
                 }
+                // {
+                //     data: 'documento',
+                //     render: function (data, type, row) {
+                //     return `<a href="${link}?id=${data}" class="btn btn-primary btn-sm">Editar</a>`;
+                //     }
+                // }
                 // {
                 // data: null,
                 //     render: function (data, type, row) {

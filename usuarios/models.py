@@ -32,6 +32,7 @@ class Empleado(models.Model):
     def __str__(self)->str:
         return "%s" %(self.nombres)
 
+
         
     
 

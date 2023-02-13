@@ -15,16 +15,16 @@ class Activo(models.Model):
     fecha = models.DateField(auto_now_add=True)
     observaciones = models.TextField(max_length=200, verbose_name="Caracteristicas")
     class EstadoActivo(models.TextChoices):
-        nuevo='3', _('Nuevo')
-        usado='2', _('Usado')
-        reparado='1', _('Reparado')
-        disponible='0', _('Disponible')
-    situacion =models.CharField(max_length=1, choices=EstadoActivo.choices, default=EstadoActivo.disponible, verbose_name="Estado activo")
+        nuevo='Nuevo', _('Nuevo')
+        usado='Usado', _('Usado')
+        reparado='Reparado', _('Reparado')
+        disponible='Disponible', _('Disponible')
+    situacion =models.CharField(max_length=10, choices=EstadoActivo.choices, default=EstadoActivo.disponible, verbose_name="Estado activo")
     class Estado(models.TextChoices):
         asignado='1', _('Asignado')
         creado='0', _('Creado')
     estado = models.CharField(max_length=1,choices=Estado.choices, default=Estado.creado, verbose_name='Estado')
-    empleadoid=models.ForeignKey(Empleado, on_delete=models.CASCADE,null=True,blank=False, verbose_name="Empleado")
+    idempleado=models.ForeignKey(Empleado, on_delete=models.CASCADE,null=True,blank=False, verbose_name="Empleado")
 
     def __str__(self)->str:
         return "%s %s %s" %(self.idactivo, self.marca, self.tipo)

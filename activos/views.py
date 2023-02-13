@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from multiprocessing import context
-from activos.forms import ActivoForm, AsignarForm
+from activos.forms import ActivoForm, UpdateForm
 from activos.models import Activo
 from django.contrib import messages
 from django.views import generic
@@ -19,7 +19,6 @@ def activos(request):
     # formulario registrar activos
 
     activos = Activo.objects.all()
-    asignar = AsignarForm()
     form = ActivoForm()
     if request.method == "POST":
         form = ActivoForm(request.POST)
@@ -45,7 +44,6 @@ def activos(request):
         'titulo': titulo,
         'form': form,
         'activos': activos,
-        'asignar': asignar
     }
 
     return render(request, 'activos/activos.html', context)
@@ -76,7 +74,7 @@ def dt_activos(request):
                 Q(fecha__icontains=search) |
                 Q(observaciones__icontains=search) |
                 Q(situacion__icontains=search) |
-                Q(empleadoid_id__icontains=search)    
+                Q(idempleado_id__icontains=search)    
         )
     
     recordsTotal = registros.count()
@@ -108,7 +106,7 @@ def dt_activos(request):
             "fecha" : d.fecha,
             "observaciones" : d.observaciones,
             "situacion" : d.situacion,
-            "empleadoid" : d.empleadoid_id,
+            "empleadoid" : d.idempleado_id,
 
         } for d in obj
     ]
@@ -116,14 +114,36 @@ def dt_activos(request):
     context["datos"] = datos
     return JsonResponse(context, safe=False)
 
-def editaractivo(request):
-    title= 'Editar activo'
-    # documento = Activo.objects.get(documento=cc)
+
+def editar_activo(request):
+    titulo="Activos - Editar"
+    pk= request.GET.get('id')
+    form_update=UpdateForm()
+    activo= Activo.objects.get(idactivo=pk)
+    if request.method == "POST":
+        print("Entro aqui")
+        form_update= UpdateForm(request.POST, instance=activo)
+        if form_update.is_valid():
+            form_update.save()
+            messages.success(
+                request,f"Se actualizo el activo {request.POST['marca']} exitosamente!"
+            )
+            return redirect('activo')
+        else:
+            messages.success(
+                request,f"ocurrio un error al guardar el activo {request.POST['marca']}!"
+            )
+    else:
+        form_update= UpdateForm(instance=activo)
+
 
     context={
-        'title': title,
+        'titulo':titulo,
+        'form_update':form_update
     }
-    return render(request,'activos/editarActivos.html', context)
+    return render(request,'activos/editarActivos.html',context)
+
+
 
 # def asignarActivo(request):
 #     title= 'Editar activo'
@@ -133,8 +153,6 @@ def editaractivo(request):
 #         'title': title,
 #     }
 #     return render(request,'activos/editarActivos.html', context)
-
-
 
 
     

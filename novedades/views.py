@@ -3,7 +3,7 @@ from multiprocessing import context
 from django.shortcuts import render, redirect
 from novedades.models import Novedad
 from django.contrib import messages
-from novedades.forms import NovedadForm
+from novedades.forms import NovedadForm, UpdateForm
 from django.views import generic
 from django.http import JsonResponse
 from django.db.models import Q
@@ -105,18 +105,44 @@ def dtnovedades(request):
     context["datos"] = datos
     return JsonResponse(context, safe=False)
 
-def editarnovedad(request):
-    title= 'Editar novedades'
-    # documento = Novedad.objects.get(documento=cc)
+
+def editar_novedad(request):
+    titulo="Novedades - Editar"
+    pk= request.GET.get('id')
+    form_update=UpdateForm()
+    novedad= Novedad.objects.get(id=pk)
+    if request.method == "POST":
+        print("Entro aqui")
+        form_update= UpdateForm(request.POST, instance=novedad)
+        if form_update.is_valid():
+            form_update.save()
+            messages.success(
+                request,f"Se actualizo el novedad exitosamente!"
+            )
+            return redirect('novedad')       
+        else:
+            messages.success(
+                request,f"ocurrio un error al guardar el novedad!"
+            )
+    else:
+        form_update= UpdateForm(instance=novedad)
+
 
     context={
-        'title': title,
+        'titulo':titulo,
+        'form_update':form_update
     }
-    return render(request,'novedades/editarNovedad.html', context)
+    return render(request,'novedades/editarNovedad.html',context)
 
 
+# def editarnovedad(request):
+#     title= 'Editar novedades'
+#     # documento = Novedad.objects.get(documento=cc)
 
-
+#     context={
+#         'title': title,
+#     }
+#     return render(request,'novedades/editarNovedad.html', context)
 
 
 
