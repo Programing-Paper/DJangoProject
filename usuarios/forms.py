@@ -6,7 +6,10 @@ from usuarios.models import Empleado, Cargo
 class EmpleadoForm(ModelForm):
     class Meta:
         model = Empleado
-        exclude = ['estado']
+        exclude = ['estado', 'user']
+        # widgets={
+        #     'fecha_nacimiento': widgets.DateInput(attrs={'type':'date'})
+        # }
 
 class CargoForm(ModelForm):
     class Meta:
@@ -16,4 +19,5 @@ class CargoForm(ModelForm):
 class UpdateForm(ModelForm):
     class Meta:
         model = Empleado
-        exclude = ['estado', 'documento']
+        exclude = ['estado', 'documento','user']
+        

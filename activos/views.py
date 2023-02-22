@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from multiprocessing import context
-from activos.forms import ActivoForm, UpdateForm
+from activos.forms import ActivoForm, UpdateForm, AsignarForm
 from activos.models import Activo
 from django.contrib import messages
 from django.views import generic
@@ -20,7 +20,7 @@ def activos(request):
 
     activos = Activo.objects.all()
     form = ActivoForm()
-    if request.method == "POST":
+    if request.method == "POST" and 'crearform' in request.POST:
         form = ActivoForm(request.POST)
         print(request.POST)
         if form.is_valid():
@@ -38,12 +38,31 @@ def activos(request):
         form = ActivoForm()
 
     # formulario asignar activos
+    formasignar = AsignarForm()
 
+    if request.method == "POST" and 'asignarform' in request.POST:
+        formasignar = AsignarForm(request.POST)
+        print(request.POST)
+        if formasignar.is_valid():
+            print("entro aqui")
+            formasignar.save()
+            messages.success(
+                request,f"Se asigno el activo a el exitosamente!"
+            )
+            return redirect('activo')
+        else:
+            messages.error(
+                request,f"Error al asignar el empleado exitosamente!"
+            )
+    else:
+        formasignar = AsignarForm()
    
     context = {
         'titulo': titulo,
         'form': form,
         'activos': activos,
+        'asignar': formasignar
+
     }
 
     return render(request, 'activos/activos.html', context)
@@ -130,7 +149,7 @@ def editar_activo(request):
             )
             return redirect('activo')
         else:
-            messages.success(
+            messages.error(
                 request,f"ocurrio un error al guardar el activo {request.POST['marca']}!"
             )
     else:
@@ -144,15 +163,6 @@ def editar_activo(request):
     return render(request,'activos/editarActivos.html',context)
 
 
-
-# def asignarActivo(request):
-#     title= 'Editar activo'
-#     # documento = Activo.objects.get(documento=cc)
-
-#     context={
-#         'title': title,
-#     }
-#     return render(request,'activos/editarActivos.html', context)
 
 
     

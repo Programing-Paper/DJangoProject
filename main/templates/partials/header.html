@@ -2,9 +2,9 @@
 {% load static %}
 <header class='menu-arriba'>
     <div>
-        <p></p>
+        <p>{{usuario_actual.first_name}}</p>
     </div>
-    <div class='amovilimg'><img></div>
+    <div class='amovilimg'><img ></div>
     <a href="{% url 'inicio' %}" title="Principal" class="icon-home">
         <i class="bi bi-house-door-fill"></i>
     </a>
@@ -24,11 +24,11 @@
         </li>
     </div>
     <div class='menu-perfil'>
-            <li><div class='img-perfil'><img src=""></div>
+            <li><div class='img-perfil'><img src="{{ MEDIA_URL }}{{image_user}}"></div>
             <ul>
                 <li><a href="{% url 'informacion' %}" target="_blank" >Información</a></li>
-                <li><a href="{% url 'config' %}">Configuración</a></li>
-                <li><a href="{% url 'login' %}">Cerrar sesión</a></li>
+                <li><a href="">Configuración</a></li>
+                <li><a href="">Cerrar sesión</a></li>
             </ul>
         </li>
     </div>

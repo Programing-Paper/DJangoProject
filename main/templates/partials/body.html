@@ -28,7 +28,17 @@
      <!--termina-->
     <link rel="stylesheet" href="{% static '/css/estilos.css' %}">
     <link rel="icon" href="{% static '\img\amovil123.png' %}" />
+    <!-- Select2 -->
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
 </head>
+
+<style>
+    input,
+    select {
+        width: 100%
+    }
+</style>
+
 <body class="fondo">
 
     {% include 'partials/header.html' %}

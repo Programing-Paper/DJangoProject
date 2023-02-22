@@ -26,7 +26,7 @@
     <div class="imgamovil">
       <img src="{% static '/img/amovil123.png' %}" alt="imgamovil">
     </div>
-    <form action="recuperarClave.php" method='POST'>
+    <form action="recuperarClave" method='POST'>
       <div class='textemail'>
         <label for="correo">Ingrese su correo electrónico, un enlace para reestablecer su contraseña va a ser enviado a su correo.</label>
       </div>
@@ -35,7 +35,7 @@
         <input type="submit" value="Recuperar Contraseña" class='posbutrec' name='recuperar' />
         <h3 id="optionreturn">--¿Desea regresar al inicio del aplicativo?--</h3>
         <div class='regresar'>
-          <a href="{% url 'login' %}" id='posbutreg'>Regresar</a>
+          <a href="" id='posbutreg'>Regresar</a>
         </div>
       </div>
     </form>

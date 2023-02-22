@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_^-r#e1q9^8w)1k__4e$4=q^+sy8twdox0024y+*ca7uv@x3(a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,11 +42,11 @@ INSTALLED_APPS = [
     'bootstrap5', # pip-install bootstrap-v5 
     'crispy_forms', #pip install django-crispy-forms
     "crispy_bootstrap5", #pip install crispy-bootstrap5
+    "django_select2",
     'activos',
     'informes',
     'novedades',
     'usuarios',
-    'configuracion',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.sesion'
             ],
         },
     },
@@ -138,9 +139,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = '/static'
+STATIC_ROOT = '/static/'
+
+MEDIA_URL= '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL= 'inicio-admin'

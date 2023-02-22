@@ -1,5 +1,5 @@
 # from http.client import HTTPResponse
-from multiprocessing import context
+# from multiprocessing import context
 from django.shortcuts import render, redirect
 from usuarios.models import Empleado, Cargo
 from django.contrib import messages
@@ -8,40 +8,65 @@ from django.views import generic
 from django.http import JsonResponse
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+
 
 # from django.views.defaults import exeption
-
 # Create your views here.
 # def hello(request):
 #     return HTTPResponse('Hello word')
 
-
+@login_required(login_url='inicio')
 def usuarios(request):
+    titulo="Usuarios - Crear"
     usuarios = Empleado.objects.all()
-    form = EmpleadoForm()
     if request.method == "POST":
-        print("entro aqui")
-        form = EmpleadoForm(request.POST)
-        if form.is_valid:
-            form.save()
-            messages.success(
-                request,f"Se agregó el usuario {request.POST['nombres']} exitosamente!"
+        form= EmpleadoForm(request.POST, request.FILES)
+        if form.is_valid():
+            if not User.objects.filter(username=request.POST['documento']):
+                user = User.objects.create_user('nombre','email@email','pass')
+                user.username= request.POST['documento']
+                user.first_name= request.POST['nombres']
+                user.last_name= request.POST['apellidos']
+                user.email= request.POST['correo']
+                user.password=make_password("@" + request.POST['nombres'][0] + request.POST['apellidos'][0] + request.POST['documento'][-4:])
+                user.save()
+                print('hola')
+            else:
+                user=User.objects.get(username=request.POST['documento'])
+
+            usuario= Empleado.objects.create(
+                documento=request.POST['documento'],
+                nombres=request.POST['nombres'],
+                apellidos=request.POST['apellidos'],
+                correo=request.POST['correo'],
+                perfil=form.cleaned_data.get('perfil'),
+                cargoid=Cargo.objects.get(id=int(request.POST['cargoid'])),
+                compania=request.POST['compania'],
+                telefono=request.POST['telefono'],
+                direccion=request.POST['direccion'],
+                user=user,
             )
-            return redirect("usuario")
+            messages.success(
+                request,f"Se registro el usuario {request.POST['nombres']} correctamente!"
+            )
+            return redirect('usuario')
         else:
+            form = EmpleadoForm(request.POST,request.FILES)
             messages.error(
-                request,f"Error al agregar {request.POST['nombres']}!"
-            ) 
+                request,f"Ocurrio un error al registrar al usuario {request.POST['nombres']}!"
+            )
     else:
         form= EmpleadoForm()
-
-    title= 'Informacion usuarios'
     context={
-        'title': title,
+        'titulo':titulo,
+        'form':form,
         'usuarios': usuarios,
-        'form': form,
     }
-    return render(request,'usuarios/usuarios.html', context)
+    return render(request,'usuarios/usuarios.html',context)
+
 
 class Dtserverside(generic.TemplateView):
     template_name = 'usuarios'
@@ -167,6 +192,29 @@ def editar_empleados(request):
 #     return render(request,'usuarios/editarUsuario.html', context)
 
 
+# def usuarios(request):
+#     usuarios = Empleado.objects.all()
+#     form = EmpleadoForm()
+#     if request.method == "POST":
+#         print("entro aqui")
+#         form = EmpleadoForm(request.POST)
+#         if form.is_valid:
+#             form.save()
+#             messages.success(
+#                 request,f"Se agregó el usuario {request.POST['nombres']} exitosamente!"
+#             )
+#             return redirect("usuario")
+#         else:
+#             messages.error(
+#                 request,f"Error al agregar {request.POST['nombres']}!"
+#             ) 
+#     else:
+#         form= EmpleadoForm()
 
-    
-
+#     title= 'Informacion usuarios'
+#     context={
+#         'title': title,
+#         'usuarios': usuarios,
+#         'form': form,
+#     }
+#     return render(request,'usuarios/usuarios.html', context)
