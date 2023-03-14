@@ -5,7 +5,7 @@
         <p>{{usuario_actual.first_name}}</p>
     </div>
     <div class='amovilimg'><img ></div>
-    <a href="{% url 'inicio' %}" title="Principal" class="icon-home">
+    <a href="{% url 'inicio-admin' %}" title="Principal" class="icon-home mt-2">
         <i class="bi bi-house-door-fill"></i>
     </a>
     <div class='menu-opciones'>
@@ -28,7 +28,7 @@
             <ul>
                 <li><a href="{% url 'informacion' %}" target="_blank" >Información</a></li>
                 <li><a href="">Configuración</a></li>
-                <li><a href="">Cerrar sesión</a></li>
+                <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
             </ul>
         </li>
     </div>
@@ -59,3 +59,4 @@
         localStorage.setItem('darkmode', value);
     }
 </script>
+

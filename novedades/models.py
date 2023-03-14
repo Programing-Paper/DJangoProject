@@ -10,7 +10,7 @@ class Novedad(models.Model):
     fecha = models.DateField( auto_now_add=True, verbose_name="Fecha registro", help_text=u"MM/DD/AAAA")
     empleado=models.ForeignKey(Empleado, on_delete=models.CASCADE,null=True,blank=False, verbose_name="Empleado")
     class Estadonovedad(models.TextChoices):
-        resuelto='Resuelo', _('Resuelo')
+        resuelto='Resuelto', _('Resuelto')
         pendiente='Pendiente', _('Pendiente')
     estado=models.CharField(max_length=10, choices=Estadonovedad.choices, default=Estadonovedad.pendiente, verbose_name="Estado")
     descripcion=models.TextField(max_length=200, verbose_name="Descripcion")

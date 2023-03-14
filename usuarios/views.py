@@ -8,7 +8,7 @@ from django.views import generic
 from django.http import JsonResponse
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 
@@ -19,6 +19,10 @@ from django.contrib.auth.models import User
 #     return HTTPResponse('Hello word')
 
 @login_required(login_url='inicio')
+
+
+@login_required
+@permission_required('usuarios.view_empleado')
 def usuarios(request):
     titulo="Usuarios - Crear"
     usuarios = Empleado.objects.all()
@@ -33,7 +37,10 @@ def usuarios(request):
                 user.email= request.POST['correo']
                 user.password=make_password("@" + request.POST['nombres'][0] + request.POST['apellidos'][0] + request.POST['documento'][-4:])
                 user.save()
-                print('hola')
+                # user_group = User
+                # my_group= Group.objects.get(usuario.cargoid)
+                # usuario.user.groups.clear()
+                # my_group.user_set.add(usuario.user)
             else:
                 user=User.objects.get(username=request.POST['documento'])
 
@@ -71,8 +78,11 @@ def usuarios(request):
 class Dtserverside(generic.TemplateView):
     template_name = 'usuarios'
 
+
+
 def dt_serverside(request):
     context= {}
+    usuarios = Empleado.objects.all()
 
     dt = request.GET
 

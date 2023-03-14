@@ -7,7 +7,7 @@ from usuarios.models import Empleado
 # Create your models here.
 
 class Activo(models.Model):
-    idactivo = models.CharField(max_length=6, primary_key=True, verbose_name='Numero activo')
+    idactivo = models.CharField(max_length=6, primary_key=True, verbose_name='Activo')
     serial = models.CharField(max_length=25, verbose_name="Serial")
     so = models.CharField(max_length=10, verbose_name="Sistama operativo")
     marca = models.CharField(max_length=25, verbose_name="Marca")
@@ -18,8 +18,8 @@ class Activo(models.Model):
         nuevo='Nuevo', _('Nuevo')
         usado='Usado', _('Usado')
         reparado='Reparado', _('Reparado')
-        disponible='Disponible', _('Disponible')
-    situacion =models.CharField(max_length=10, choices=EstadoActivo.choices, default=EstadoActivo.disponible, verbose_name="Estado activo")
+        otro='Otro', _('Otro')
+    situacion =models.CharField(max_length=10, choices=EstadoActivo.choices, default=EstadoActivo.otro, verbose_name="Estado activo")
     class Estado(models.TextChoices):
         asignado='1', _('Asignado')
         creado='0', _('Creado')
@@ -27,7 +27,8 @@ class Activo(models.Model):
     idempleado=models.ForeignKey(Empleado, on_delete=models.CASCADE,null=True,blank=False, verbose_name="Empleado")
 
     def __str__(self)->str:
-        return "%s %s %s" %(self.idactivo, self.marca, self.tipo)
+        return "%s" %(self.idactivo)
+    
 
 
         

@@ -1,0 +1,29 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Contraseña</title>
+  <link href="{% static '/css/restablecer.css' %}" rel='stylesheet' />
+  <link rel="icon" href="{% static '\img\Imagen74.png' %}" />
+  <!-- alertas -->
+  <script src="{% static '/jquery/jquery.js' %}"></script>
+  <script src="{% static '/js/jquery.toast.js' %}"></script>
+  <link rel="stylesheet" href="{% static '/css/jquery.toast.css' %}">
+</head>
+
+<body>
+ 
+    {% block bloque %}  
+      
+    {% endblock bloque %}
+        

@@ -2,8 +2,6 @@
 from django.urls import path
 from .views import novedades, dtnovedades, Dtnovedades, editar_novedad
 
-
-
 urlpatterns = [
     path('', novedades, name='novedades'), 
     path('', Dtnovedades.as_view(), name='novedad'),  

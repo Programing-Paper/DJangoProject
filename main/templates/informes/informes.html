@@ -12,7 +12,7 @@
         <div class="content-indicador">
             <div class="container">
                 <h3>Activos</h3>
-                <a href="../graficos/activosGraficos.php" target="_blank">
+                <a href="{% url 'activo' %}" target="_blank">
                     <div>
                         <canvas id="indicador-activos"></canvas>
                     </div>
@@ -22,7 +22,7 @@
         <div class="content-indicador">
             <div class="container">
                 <h3>Cargos</h3>
-                <a href="../graficos/usuariosGraficos.php" target="_blank">
+                <a href="{% url 'usuario' %}" target="_blank">
                     <div>
                         <canvas id="indicador-usuarios"></canvas>
                     </div>
@@ -32,7 +32,7 @@
         <div class="content-indicador">
             <div class="container">
                 <h3>Novedades</h3>
-                <a href="../graficos/novedadesGraficos.php" target="_blank">
+                <a href="{% url 'novedad' %}" target="_blank">
                     <div>
                         <canvas id="indicador-novedades"></canvas>
                     </div>
@@ -41,107 +41,125 @@
         </div>
     </main>
 </div>
+{% endblock contenido %}
+
+{% block javascript %}
 
 <!-- boststrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <!-- libreria chart.js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
 <script>
-    const ctx = document.getElementById('indicador-activos').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Nuevo', 'Usado', 'Reparado','Disponible'],
-            datasets: [{
-                label: 'Numero de registros',
-                data: [],
-                backgroundColor: [
-                    'rgba(37, 85, 175, 1)',
-                    'rgba(0, 109, 255, 0.58)',
-                    'rgba(140, 140, 140, 1)',
-                    'rgba(232, 19, 19, 0.68)',
-                    
-                ],
-                borderColor: [
-                    'rgba(37, 85, 175, 1)',
-                    'rgba(0, 109, 255, 0.58)',
-                    'rgba(140, 140, 140, 1)',
-                    'rgba(232, 19, 19, 0.68)',          
-                ],
-                borderWidth: 1
-            }]
-        },
-        respontive: 'true',
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+const ctx = document.getElementById('indicador-activos').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Nuevos','Usados', 'Reparados', 'Otros'],
+        datasets: [{
+            label: 'Numero de registros',
+            data: {{ labels_stock|safe }},
+            backgroundColor: [
+                'rgba(37, 85, 175, 1)',
+                'rgba(0, 109, 255, 0.58)',
+                'rgba(140, 140, 140, 1)',
+                'rgba(232, 19, 19, 0.68)',
+                
+            ],
+            borderColor: [
+                'rgba(37, 85, 175, 1)',
+                'rgba(0, 109, 255, 0.58)',
+                'rgba(140, 140, 140, 1)',
+                'rgba(232, 19, 19, 0.68)',          
+            ],
+            borderWidth: 1
+        }]
+    },
+    respontive: 'true',
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
 
-    // indicadores usuarios
+// indicadores usuarios
 
-    const ctx1 = document.getElementById('indicador-usuarios').getContext('2d');
-    const myChart1 = new Chart(ctx1, {
-        type: 'bar',
-        data: {
-            labels: ['Empleados', 'Admins', ],
-            datasets: [{
-                label: '# of Votes',
-                data: [],
-                backgroundColor: [
-                    'rgba(0, 109, 255, 0.58)',
-                    'rgba(37, 85, 175, 1)',
-                ],
-                borderColor: [
-                    'rgba(0, 109, 255, 0.58)',
-                    'rgba(37, 85, 175, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+const ctx1 = document.getElementById('indicador-usuarios').getContext('2d');
+const myChart1 = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: ['Empleados', 'Admins'],
+        datasets: [{
+            label: '# of Votes',
+            data: {{ roles|safe }},
+            backgroundColor: [
+                'rgba(0, 109, 255, 0.58)',
+                'rgba(37, 85, 175, 1)',
+            ],
+            borderColor: [
+                'rgba(0, 109, 255, 0.58)',
+                'rgba(37, 85, 175, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
 
-    // indicadores reparaciones
-    const ctx2 = document.getElementById('indicador-novedades').getContext('2d');
-    const myChar2 = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: ['Novedades', 'Resueltos'],
-            datasets: [{
-                label: '# of Votes',
-                data: [],
-                backgroundColor: [
-                    'rgba(37, 85, 175, 1)',
-                    'rgba(0, 109, 255, 0.58)',
+// indicadores reparaciones
+const ctx2 = document.getElementById('indicador-novedades').getContext('2d');
+const myChar2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ['Pendientes', 'Resueltos'],
+        datasets: [{
+            label: '# of Votes',
+            data: {{ estado|safe }},
+            backgroundColor: [
+                'rgba(37, 85, 175, 1)',
+                'rgba(0, 109, 255, 0.58)',
 
-                ],
-                borderColor: [
-                    'rgba(37, 85, 175, 1)',
-                    'rgba(0, 109, 255, 0.58)',
+            ],
+            borderColor: [
+                'rgba(37, 85, 175, 1)',
+                'rgba(0, 109, 255, 0.58)',
 
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
+
 </script>
 
-{% endblock contenido %}
+{% endblock javascript %}
+
+{% block footer %}
+
+    <link rel="stylesheet" href="{% static 'css\estilos.css' %}">
+    <footer class="container-footer">
+        <div>
+            <h1> SIDICI. todos los derechos reservados @Amovil &#169 2016 - 2022 </h1>
+        </div>
+    </footer>
+    <!-- boststrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+{% endblock footer %}
     

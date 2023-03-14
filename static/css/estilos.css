@@ -606,21 +606,27 @@ footer h1{
     background-color: var(--color-blanco);
     width: 50%;
     border-radius: 5px;
+    z-index: 100;
+    max-height: auto;
+    margin-bottom: 50px;
 }
 
 .contentupdate form{
     margin-top: 5px;
     margin-bottom: 5px;
-    text-align: center;
-    max-width: 100%;
     color: var(--font-color);
+    margin-bottom: 15px;
+}
+
+.contentupdate textarea{
+    resize: none;
 }
 
 .content-section{
     position: relative;
     display: flex;
     width: 95%;
-    height: 70vh;
+    min-height: 70vh;
     margin-top: 20px;
     background-color: var(--color-blanco);
     border-radius: 5px;

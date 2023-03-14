@@ -10,7 +10,7 @@ class Cargo(models.Model):
     sueldo = models.CharField(max_length=10, blank=True, verbose_name='Sueldo')
     def __str__(self)->str:
         return "%s" %(self.nomcargo)
-   
+     
 class Empleado(models.Model):
     documento = models.CharField(max_length=11, primary_key=True, verbose_name="Documento de Identidad")
     nombres=models.CharField(max_length=60, verbose_name="Nombres")
@@ -32,8 +32,9 @@ class Empleado(models.Model):
     estado=models.CharField(max_length=1, choices=Estadoempleado.choices, default=Estadoempleado.activo, verbose_name="Estado empleado")
     telefono=models.CharField(max_length=150, verbose_name="Teléfono")
     direccion=models.CharField(max_length=70, verbose_name="Dirección")
-    # fecha_nacimiento=models.DateField(verbose_name="Fecha", help_text=u"MM/DD/AAAA")
     user=models.ForeignKey(User, on_delete=models.CASCADE)
+    # fecha_nacimiento=models.DateField(verbose_name="Fecha", help_text=u"MM/DD/AAAA")
+
 
     def __str__(self)->str:
         return "%s" %(self.nombres)

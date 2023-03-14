@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from multiprocessing import context
 from activos.forms import ActivoForm, UpdateForm, AsignarForm
 from activos.models import Activo
 from django.contrib import messages
@@ -7,12 +6,17 @@ from django.views import generic
 from django.http import JsonResponse
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 
 # Create your views here.
 
+@login_required(login_url='inicio')
 
+
+@login_required
+@permission_required('activos.view_activo')
 def activos(request):
     titulo = "Modulo activos"
 
@@ -37,25 +41,18 @@ def activos(request):
     else:
         form = ActivoForm()
 
-    # formulario asignar activos
     formasignar = AsignarForm()
 
-    if request.method == "POST" and 'asignarform' in request.POST:
-        formasignar = AsignarForm(request.POST)
-        print(request.POST)
-        if formasignar.is_valid():
-            print("entro aqui")
-            formasignar.save()
+    if request.method == 'POST':
+            activo = Activo.objects.filter(idactivo = int(request.POST['id'])).update(
+                idempleado= request.POST['idempleado']
+            )
             messages.success(
-                request,f"Se asigno el activo a el exitosamente!"
+                request,f"Se asigno el activo exitosamente!"
             )
             return redirect('activo')
-        else:
-            messages.error(
-                request,f"Error al asignar el empleado exitosamente!"
-            )
     else:
-        formasignar = AsignarForm()
+        print('hola')
    
     context = {
         'titulo': titulo,
@@ -115,6 +112,21 @@ def dt_activos(request):
     except EmptyPage:
         obj = paginator.page(paginator.num_pages).object_list
 
+
+    # datos= []
+    # for d in obj:
+    #     datos.append({
+    #         "idactivo" : d.idactivo,
+    #         "serial" : d.serial,
+    #         "so" : d.so,
+    #         "marca" : d.marca,
+    #         "tipo" : d.tipo,
+    #         "fecha" : d.fecha,
+    #         "observaciones" : d.observaciones,
+    #         "situacion" : d.situacion,
+    #         "empleadoid" : d.idempleado,
+    #     })
+
     datos = [
         {
             "idactivo" : d.idactivo,
@@ -129,6 +141,7 @@ def dt_activos(request):
 
         } for d in obj
     ]
+
 
     context["datos"] = datos
     return JsonResponse(context, safe=False)

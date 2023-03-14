@@ -8,6 +8,7 @@ from django.views import generic
 from django.http import JsonResponse
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required, permission_required
 
 # from django.views.defaults import exeption
 
@@ -15,7 +16,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # def hello(request):
 #     return HTTPResponse('Hello word')
 
-
+@login_required
 def novedades(request):
     novedades = Novedad.objects.all()
     formnovedad = NovedadForm()
@@ -48,6 +49,7 @@ def novedades(request):
 class Dtnovedades(generic.TemplateView):
     template_name = 'novedades'
 
+@login_required
 def dtnovedades(request):
     context= {}
 
@@ -105,7 +107,7 @@ def dtnovedades(request):
     context["datos"] = datos
     return JsonResponse(context, safe=False)
 
-
+@login_required
 def editar_novedad(request):
     titulo="Novedades - Editar"
     pk= request.GET.get('id')

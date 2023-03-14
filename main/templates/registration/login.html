@@ -4,6 +4,8 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 {% load crispy_forms_tags %}
+{% include 'partials/toast.html' %}
+
 
 <head>
     <meta charset="UTF-8">
@@ -44,7 +46,7 @@
                 </form>
             </div>
             <div class="formpass mt-5">
-                <a href="{% url 'recuperar' %}">-----------------¿Olvidaste tu contraseña?.-----------------</a>
+                <a href="{% url 'pass_reset' %}">-----------------¿Olvidaste tu contraseña?.-----------------</a>
                 <div class="termcondicion">
                     <p> Al continuar, usted confirma que ha leído y aceptado nuestros:
                         <a href="https://web.amovil.co/" target="_blank">Terminos y condiciones.</a>
@@ -58,27 +60,44 @@
 
 </html>
 
+
+{% if form.errors %}
 <script>
-  $.toast({
-    heading: 'Error!',
-    text: 'respuesta',
-    icon: 'error',
-    loaderBg: 'white',
-    transition: 'plain',
-    position: 'top-left'
-})
-</script>
- <script>
     $.toast({
-        heading: 'Bien!',
-        text: 'respuesta',
-        icon: 'success',
-        transition: 'plain',
-        position: 'top-left',
-        bgColor: '#0f76bc',
-        loaderBg: 'white'
+      heading: 'Error!',
+      text: 'Su nombre de usuario y contraseña no coinciden. Inténtalo de nuevo.',
+      icon: 'error',
+      loaderBg: 'white',
+      transition: 'plain',
+      position: 'top-left'
+  })
+  </script>
+<p></p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <script>
+        $.toast({
+          heading: 'Error!',
+          text: 'Su cuenta no tiene acceso a esta página. Para proceder, por favor inicie sesión con una cuenta que tenga acceso.',
+          icon: 'error',
+          loaderBg: 'white',
+          transition: 'plain',
+          position: 'top-left'
       })
-</script>
-
-
+      </script>
+    {% else %}
+    <script>
+        $.toast({
+          heading: 'Error!',
+          text: 'Por favor inicie sesión para ver esta página.',
+          icon: 'error',
+          loaderBg: 'white',
+          transition: 'plain',
+          position: 'top-left'
+      })
+      </script>
+    {% endif %}
+{% endif %}
       

@@ -7,7 +7,7 @@ def sesion(request):
         if Empleado.objects.filter(user_id=usuario_actual.id):
             image_user=Empleado.objects.get(user_id=usuario_actual.id).perfil.url
     context={
-        'usuario_actual':usuario_actual,
+        'usuario_actual': usuario_actual,
         'image_user': image_user
     }
     return context

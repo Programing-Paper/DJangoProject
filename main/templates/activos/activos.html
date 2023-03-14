@@ -26,8 +26,8 @@
                             <form action="" method="POST">
                                 {{asignar|crispy}}
                                 {% csrf_token %}
-                                <label for="activo">Numero activo</label>
-                                <select class='select form-select mb-lg-3' name="" id="activo">
+                                <label for="activo">Activo</label>
+                                <select name='id' class='select form-select mb-lg-3 mb-3'id="activo">
                                     <option value="" selected="">---------</option>
                                     {% for activo in activos %}
                                     <option value="{{activo.idactivo}}">{{activo.idactivo}} {{activo.tipo}} {{activo.marca}}</option>
@@ -35,7 +35,7 @@
                                 </select>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="submit" name="asignarform" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                              </form>
                         </div>
@@ -93,7 +93,23 @@
     </main>
 </div>
 
+{% endblock contenido %}
 
+{% block footer %}
+
+    <link rel="stylesheet" href="{% static 'css\estilos.css' %}">
+    <footer class="container-footer">
+        <div>
+            <h1> SIDICI. todos los derechos reservados @Amovil &#169 2016 - 2022 </h1>
+        </div>
+    </footer>
+    <!-- boststrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+{% endblock footer %}
+
+{% block javascript %}
+    
 <!-- DataTables  & Plugins -->
 <script src="{% static 'datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
@@ -123,7 +139,7 @@
                 processing: true,
                 serverSide: true,
                 pageLength: 10,
-                buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                buttons: ["copy", "csv", "excel", "pdf", "print"],
                 ajax: {
                     url: "{% url 'datosactivos' %}",
                     dataSrc: "datos",
@@ -175,4 +191,8 @@
     
 </script>
 
-{% endblock contenido %}
+{% endblock javascript %}
+
+
+
+    

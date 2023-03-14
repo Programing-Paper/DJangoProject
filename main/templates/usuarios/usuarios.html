@@ -7,16 +7,19 @@
 <div class="subcontent">
     <nav class="containernav-users">
         <h1>Empleados</h1>
-
         <div class='opcionesnav-users'>
-            <a href="{% url 'crearcargo' %}">
+            {% if perms.usuarios.add_cargo %}
+            <a href="{% url 'crearcargo' %}" class="text-decoration-none">
                 <button type="button" class="botoncolor">
-                    Agregar cargo
+                        Agregar cargo
                 </button>
             </a>
+            {% endif %}
+            {% if perms.usuarios.add_empleado %}
             <button type="button" class="botoncolor" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Registrar empleados
             </button>
+            {% endif %}
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -24,7 +27,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">Registrar empleados</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+                        </div>              
                         <div class="modal-body">
                             <form action="" method="POST" enctype="multipart/form-data" >
                                 {{form|crispy}}
@@ -33,6 +36,7 @@
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -89,7 +93,7 @@ var CSRF_TOKEN = '{{ csrf_token }}';
             processing: true,
             serverSide: true,
             pageLength: 10,
-            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            buttons: ["copy", "csv", "excel", "pdf", "print"],
             ajax: {
                 url: "{% url 'datosusuarios' %}",
                 dataSrc: "datos",
@@ -103,13 +107,17 @@ var CSRF_TOKEN = '{{ csrf_token }}';
                 {data: 'estado'},
                 {data: 'telefono'},
                 {data: 'direccion'},
-                {
+                {   
                     data: 'documento',
                     render: function (data, type, row) {
-                    return `<form action='${link}' method='GET'>
+                    return `{% if perms.usuarios.add_empleado %}
+                            <form action='${link}' method='GET'>
                                 <input type='hidden' name='csrfmiddlewaretoken' value='${CSRF_TOKEN}'></input>
                                 <button type='submit' name='id' value='${data}' class="btn btn-primary btn-sm">Editar</button>
-                            </form>`;
+                            </form>
+                            {% else %}
+                            <button type='submit' name='id' value='${data}' class="btn btn-primary btn-sm">X</button>
+                            {% endif %}`;
                     },
                 }
                 // {
@@ -162,5 +170,15 @@ var CSRF_TOKEN = '{{ csrf_token }}';
 
 {% endblock contenido %}
 
+{% block footer %}
 
+    <link rel="stylesheet" href="{% static 'css\estilos.css' %}">
+    <footer class="container-footer">
+        <div>
+            <h1> SIDICI. todos los derechos reservados @Amovil &#169 2016 - 2022 </h1>
+        </div>
+    </footer>
+    <!-- boststrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+{% endblock footer %}
