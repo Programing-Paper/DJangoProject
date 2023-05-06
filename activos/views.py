@@ -45,7 +45,7 @@ def activos(request):
 
     if request.method == 'POST':
             activo = Activo.objects.filter(idactivo = int(request.POST['id'])).update(
-                idempleado= request.POST['idempleado']
+                empleado_id= request.POST['empleado']
             )
             messages.success(
                 request,f"Se asigno el activo exitosamente!"
@@ -65,7 +65,7 @@ def activos(request):
     return render(request, 'activos/activos.html', context)
 
 class Dtactivos(generic.TemplateView):
-    template_name = 'activos'
+    template_name = 'activo'
     
 def dt_activos(request):
     context= {}
@@ -90,7 +90,7 @@ def dt_activos(request):
                 Q(fecha__icontains=search) |
                 Q(observaciones__icontains=search) |
                 Q(situacion__icontains=search) |
-                Q(idempleado_id__icontains=search)    
+                Q(empleado_id__icontains=search)    
         )
     
     recordsTotal = registros.count()
@@ -127,21 +127,23 @@ def dt_activos(request):
     #         "empleadoid" : d.idempleado,
     #     })
 
-    datos = [
-        {
-            "idactivo" : d.idactivo,
-            "serial" : d.serial,
-            "so" : d.so,
-            "marca" : d.marca,
-            "tipo" : d.tipo,
-            "fecha" : d.fecha,
-            "observaciones" : d.observaciones,
-            "situacion" : d.situacion,
-            "empleadoid" : d.idempleado_id,
+    # activos = Activo.objects.all()
 
-        } for d in obj
-    ]
-
+    # for activo in activos:
+    #     yield activo.empleado
+   
+    datos = []
+    for item in obj:
+        datos.append({
+            'idactivo': item.idactivo,
+            'serial': item.serial,
+            'marca': item.marca,
+            'tipo': item.tipo,
+            'fecha': item.fecha,
+            'observaciones': item.observaciones,
+            'situacion': item.situacion,
+            'empleado': item.empleado.nombres,
+        })
 
     context["datos"] = datos
     return JsonResponse(context, safe=False)
@@ -174,6 +176,7 @@ def editar_activo(request):
         'form_update':form_update
     }
     return render(request,'activos/editarActivos.html',context)
+
 
 
 

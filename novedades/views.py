@@ -1,5 +1,3 @@
-
-from multiprocessing import context
 from django.shortcuts import render, redirect
 from novedades.models import Novedad
 from django.contrib import messages
@@ -97,7 +95,7 @@ def dtnovedades(request):
             "id" : d.id,
             "descripcion" : d.descripcion,
             "fecha" : d.fecha,
-            "empleado" : d.empleado_id,
+            "empleado" : d.empleado.nombres,
             "estado" : d.estado,
             "activo" : d.activo_id,
 

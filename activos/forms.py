@@ -6,7 +6,7 @@ class ActivoForm(ModelForm):
     class Meta:
         model = Activo
         # fields = '__all__'
-        exclude = ['estado', 'idempleado']
+        exclude = ['estado', 'empleado_id']
         widgets={
           'fecha': widgets.DateInput(attrs={'type':'date'}, format='%Y-%m-%d'),
         }
@@ -14,7 +14,7 @@ class ActivoForm(ModelForm):
 class UpdateForm(ModelForm):
     class Meta:
         model = Activo
-        exclude = ['estado', 'idactivo', 'idempleado']
+        exclude = ['estado', 'idactivo', 'empleado_id']
         
 # class AsignarForm(forms.Form):
 #   fecha= forms.DateField(widget=forms.DateInput(attrs={'type':'date'}, format='%Y-%m-%d'))

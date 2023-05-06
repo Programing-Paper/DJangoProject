@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.defaults import page_not_found
 from django.contrib.auth import logout
-from activos.models import Activo
+# from activos.models import Activo
 
 # from usuarios.models import Empleado
 # from novedades.models import Novedad

@@ -24,7 +24,7 @@ class Activo(models.Model):
         asignado='1', _('Asignado')
         creado='0', _('Creado')
     estado = models.CharField(max_length=1,choices=Estado.choices, default=Estado.creado, verbose_name='Estado')
-    idempleado=models.ForeignKey(Empleado, on_delete=models.CASCADE,null=True,blank=False, verbose_name="Empleado")
+    empleado =models.ForeignKey(Empleado, on_delete=models.CASCADE,null=True,blank=False, verbose_name="Empleado")
 
     def __str__(self)->str:
         return "%s" %(self.idactivo)
